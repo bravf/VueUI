@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8"/>
+        <title>VueUI-pager</title>
+        <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body id="pagerTest">
+        <vue-pager v-with="totalPage:pagerConf.totalPage, onPageChange:pagerConf.change, comId:pagerConf.firstComId"></vue-pager>
+        <vue-pager v-with="totalPage:pagerConf.totalPage, onPageChange:pagerConf.change"></vue-pager>
+    </body>
+</html>
+<script src="../../lib/jquery.js"></script>
+<script src="../../lib/vue.js"></script>
+<script src="../../lib/vueUI.js"></script>
+<script src="pager.js"></script>
+<script>
+x = new Vue({
+    el : '#pagerTest',
+    data : {
+        pagerConf : {
+            totalPage : 198,
+            firstComId : 'firstPager',
+            change : function (num){
+                console.log(num)
+            }
+        }
+    }
+})
+
+setTimeout(function (){
+    //x.pagerConf.totalPage = 100
+    console.log(1)
+}, 2000)
+
+console.log(VueUI.getComponent('firstPager').pageSize)
+</script>
