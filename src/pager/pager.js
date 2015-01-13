@@ -1,3 +1,7 @@
+/*
+    Copyright (c) 2014 bravf(bravfing@126.com)
+*/
+
 VueUI.component('vue-pager', {
     template :
     '<div class="vue-pager">' +
