@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2014 bravf(bravfing@126.com)
+    Copyright (c) 2015 bravf(bravfing@126.com)
 */
 
 VueUI.component('vue-pager', {
