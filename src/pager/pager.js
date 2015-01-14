@@ -115,7 +115,6 @@ VueUI.component('vue-pager', {
         }
     },
     compiled : function (){
-        var me = this
         this.getPageRange()
     }
 })
