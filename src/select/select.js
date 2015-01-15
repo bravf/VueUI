@@ -140,18 +140,20 @@ VueUI.component('vue-select', {
 
         this.syncCurrByValue()
 
+        //设置各种宽度
         var $dom = $(this.$el)
         var $btn = $dom.find('.vue-select-btn')
         var $optionsDiv = $dom.find('.vue-select-options-div')
         var $caret = $btn.find('.caret')
 
-        $(window).on('click', function (e){
-            me.display = 'none'
-        })
-
         $btn.outerWidth(this.width)
         $optionsDiv.outerWidth(this.width)
 
         $btn.find('.vue-select-btn-text').width(this.width - 35)
+
+        //设置全局事件
+        $(window).on('click', function (e){
+            me.display = 'none'
+        })
     }
 })
