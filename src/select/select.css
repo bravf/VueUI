@@ -6,10 +6,15 @@
     text-align: left;
     position: relative;
     height: 34px;
+    padding-right: 22px!important;
+}
+.vue-select-btn-text{
+    display: inline-block;
+    overflow: hidden;
 }
 .vue-select-btn .caret{
     position: absolute;
-    right: 10px;
+    right: 8px;
     top: 14px;
 }
 .vue-select-options-div{
@@ -18,7 +23,7 @@
     overflow: scroll;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 4px;
-    margin-top: 2px;
+    top: 2px;
     z-index: 10000;
 }
 .vue-select-options-ul{
@@ -29,12 +34,14 @@
     margin: 0;
     border: none;
 }
+.vue-select-options-ul a{
+    padding: 3px 12px!important;
+    overflow: hidden;
+}
 .vue-select-option-curr{
     background: #f5f5f5;
 }
-.vue-select-options-ul-scaleY{
+.vue-select-options-ul-scaleY, .vue-select-options-ul-scaleY li{
     transform:scaleY(-1);
-}
-.vue-select-options-ul-scaleY li{
-    transform:scaleY(-1);
+    -webkit-transform:scaleY(-1);
 }

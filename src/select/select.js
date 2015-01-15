@@ -4,13 +4,14 @@
 
 VueUI.component('vue-select', {
     template :
-        '<div class="vue-select">' +
-            '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">{{options[currIndex].text}}' +
+        '<div class="vue-select" v-on="click:selectClick">' +
+            '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
+                '<span class="vue-select-btn-text">{{text}}</span>' +
                 '<span class="caret"></span>' +
             '</button>' +
             '<div class="vue-select-options-div" v-style="display:display">' +
                 '<ul class="dropdown-menu vue-select-options-ul">' +
-                    '<li v-repeat="options" v-on="click:itemClick($index)" v-class="vue-select-option-curr:$index==currIndex">' +
+                    '<li v-repeat="options" v-on="click:itemClick($index)" v-class="vue-select-option-curr:$index==index">' +
                         '<a href="javascript:;">{{text}}</a>' +
                     '</li>' +
                 '</ul>' +
@@ -20,18 +21,76 @@ VueUI.component('vue-select', {
     data : function (){
         return {
             config : {},
+            //数据
+            options : [],
+            //组件宽度
             width: 100,
+            //是否显示options
             display : 'none',
-            currIndex : 0,
-            options : []
+            //当前值
+            value : '',
+            //当前文本
+            text : '',
+            //当前索引
+            index : 0
+        }
+    },
+    watch : {
+        options : function (){
+            this.syncCurrByValue()
+        },
+        index : function (){
+            this.syncCurrByIndex()
+        },
+        value : function (){
+            this.syncCurrByValue()
         }
     },
     methods : {
+        selectClick : function (e){
+            e.stopPropagation()
+        },
+        buttonClick : function (){
+            this.toggleOptions()
+        },
+        itemClick : function (idx){
+            this.index = idx
+            this.toggleOptions()
+        },
+        getVal : function (){
+            return {
+                value : this.value,
+                text : this.text,
+                index : this.index
+            }
+        },
+        syncCurrByValue : function (){
+            if (!this.options.length){
+                return
+            }
+            for (var i=0, option; i<this.options.length; i++){
+                option = this.options[i]
+                if (option.value == this.value){
+                    this.index = i
+                    this.text = option.text
+                    return
+                }
+            }
+            this.syncCurrByIndex()
+        },
+        syncCurrByIndex : function (){
+            var currOption = this.options[this.index]
+            if (!currOption){
+                return
+            }
+            this.value = currOption.value
+            this.text = currOption.text
+        },
         toggleOptions : function (){
             this.display = this.display == 'none' ? 'block' : 'none'
 
             if (this.display == 'none'){
-                return false
+                return
             }
 
             var $select = $(this.$el)
@@ -39,6 +98,11 @@ VueUI.component('vue-select', {
             var $btn = $select.find('.vue-select-btn')
             var $ul = $select.find('ul')
 
+            //设置li文本宽度
+            var optionTxtWidth = this.width - 36
+            $ul.find('a').width(optionTxtWidth)
+
+            //判断option向上弹出还是向下
             //得到页面总高度
             var pageH = document.documentElement.scrollHeight
             //得到组件y轴位置
@@ -53,8 +117,8 @@ VueUI.component('vue-select', {
             var fn = ''
 
             if (divH >= (pageH-selectY)){
-                marginTop = -(btnH + divH + 2)
-                scrollTop = 1e4
+                marginTop = -(btnH + divH + 4)
+                scrollTop = 1e8
                 fn = 'addClass'
             }
             else {
@@ -69,20 +133,12 @@ VueUI.component('vue-select', {
             Vue.nextTick(function (){
                 $div.scrollTop(scrollTop)
             })
-        },
-        buttonClick : function (){
-            this.toggleOptions()
-        },
-        itemClick : function (idx){
-            this.currIndex = idx
-        },
-        getVal : function (){
-            var data = this.options[this.currIndex]
-            return {value:data.value, text:data.text}
         }
     },
     compiled : function (){
         var me = this
+
+        this.syncCurrByValue()
 
         var $dom = $(this.$el)
         var $btn = $dom.find('.vue-select-btn')
@@ -90,13 +146,12 @@ VueUI.component('vue-select', {
         var $caret = $btn.find('.caret')
 
         $(window).on('click', function (e){
-            if (e.target == $btn.eq(0)[0]){
-                return
-            }
             me.display = 'none'
         })
 
-        $btn.width(this.width)
-        $optionsDiv.width(this.width)
+        $btn.outerWidth(this.width)
+        $optionsDiv.outerWidth(this.width)
+
+        $btn.find('.vue-select-btn-text').width(this.width - 35)
     }
 })

@@ -36,14 +36,24 @@
 
 var selectConf = {
     options : [],
-    id : 'mySelect'
+    id : 'mySelect',
+    width : 130,
+    value : 3
 }
-for (var i=1; i<10; i++){
-    selectConf.options.push({
-        value : i,
-        text : '江苏省' + i
-    })
+
+function setOptions(n){
+    for (var i=1; i<n; i++){
+        selectConf.options.push({
+            value : i,
+            text : '江苏省南通市' + i
+        })
+    }
 }
+
+setOptions(100)
+setTimeout(function (){
+    setOptions(100)
+}, 400)
 
 new Vue({
     el : '#selectTest',
