@@ -7,7 +7,18 @@
         <link rel="stylesheet" href="select.css">
     </head>
     <body id="selectTest">
-        <div style="padding:20px">
+        <div style="padding:20px;">
+            <vue-select v-with="config:selectConf"></vue-select>
+        </div>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div style="margin-bottom:200px"></div>
+
+        <div class="btn-group">
+            <button class="btn btn-default" v-on="click:print">打印当前select值（在console里）</button>
+        </div>
+
+        <div style="padding:20px;">
             <vue-select v-with="config:selectConf"></vue-select>
         </div>
 
@@ -27,7 +38,7 @@ var selectConf = {
     options : [],
     id : 'mySelect'
 }
-for (var i=1; i<100; i++){
+for (var i=1; i<10; i++){
     selectConf.options.push({
         value : i,
         text : '江苏省' + i

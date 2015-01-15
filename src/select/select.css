@@ -1,9 +1,11 @@
 .vue-select{
     position: relative;
+    height: 34px;
 }
 .vue-select-btn{
     text-align: left;
     position: relative;
+    height: 34px;
 }
 .vue-select-btn .caret{
     position: absolute;
@@ -12,10 +14,12 @@
 }
 .vue-select-options-div{
     position: relative;
-    max-height: 200px;
+    max-height: 270px;
     overflow: scroll;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 4px;
+    margin-top: 2px;
+    z-index: 10000;
 }
 .vue-select-options-ul{
     position: static;
@@ -27,4 +31,10 @@
 }
 .vue-select-option-curr{
     background: #f5f5f5;
+}
+.vue-select-options-ul-scaleY{
+    transform:scaleY(-1);
+}
+.vue-select-options-ul-scaleY li{
+    transform:scaleY(-1);
 }
