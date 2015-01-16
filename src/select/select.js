@@ -5,6 +5,7 @@
 VueUI.component('vue-select', {
     template :
         '<div class="vue-select" v-on="click:selectClick">' +
+            '<div class="vue-select-content"><content></content></div>' +
             '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
                 '<span class="vue-select-btn-text">{{text}}</span>' +
                 '<span class="caret"></span>' +
@@ -99,7 +100,10 @@ VueUI.component('vue-select', {
 
             //判断option向上弹出还是向下
             //得到页面总高度
-            var pageH = Math.max(document.documentElement.scrollHeight, document.documentElement.clientHeight)
+            var pageH = Math.max(
+                document.documentElement.scrollHeight,
+                document.documentElement.clientHeight
+            )
             //得到组件y轴位置
             var selectY = $select.offset().top
             //得到容器高度
@@ -135,12 +139,25 @@ VueUI.component('vue-select', {
 
         this.syncCurrByValue()
 
-        //设置各种宽度
         var $dom = $(this.$el)
         var $btn = $dom.find('.vue-select-btn')
         var $optionsDiv = $dom.find('.vue-select-options-div')
         var $caret = $btn.find('.caret')
 
+        //检查是否有硬编码的option
+        var $options = $dom.find('option')
+        if ($options.length > 0){
+            this.data = []
+
+            $options.each(function (){
+                me.data.push({
+                    value : this.value,
+                    text : this.text
+                })
+            })
+        }
+
+        //设置各种宽度
         $btn.outerWidth(this.width)
         $optionsDiv.outerWidth(this.width)
 

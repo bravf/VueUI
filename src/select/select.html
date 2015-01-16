@@ -7,8 +7,14 @@
         <link rel="stylesheet" href="select.css">
     </head>
     <body id="selectTest">
-        <div style="padding:20px;">
-            <vue-select v-with="config:selectConf" vue-id="mySelect"></vue-select>
+        <div style="padding-top:300px;">
+            <vue-select v-with="config:selectConf" vue-id="mySelect">
+                <option value="1">江苏省南通市1</option>
+                <option value="2">江苏省南通市2</option>
+                <option value="3">江苏省南通市3</option>
+                <option value="4">江苏省南通市4</option>
+                <option value="5">江苏省南通市5</option>
+            </vue-select>
         </div>
 
         <!-- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -52,10 +58,10 @@ function setOptions(n){
     }
 }
 
-setOptions(100)
-setTimeout(function (){
-    setOptions(100)
-}, 400)
+// setOptions(100)
+// setTimeout(function (){
+//     setOptions(100)
+// }, 400)
 
 new Vue({
     el : '#selectTest',

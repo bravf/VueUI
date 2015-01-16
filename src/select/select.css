@@ -2,6 +2,9 @@
     position: relative;
     height: 34px;
 }
+.vue-select-content{
+    display: none;
+}
 .vue-select-btn{
     text-align: left;
     position: relative;
@@ -33,6 +36,9 @@
     min-width: 0!important;
     margin: 0;
     border: none;
+}
+.vue-select-options-ul li:hover{
+    background: #f5f5f5;
 }
 .vue-select-options-ul a{
     padding: 3px 12px!important;
