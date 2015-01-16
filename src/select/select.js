@@ -99,9 +99,9 @@ VueUI.component('vue-select', {
 
             //判断option向上弹出还是向下
             //得到页面总高度
-            var pageH = document.documentElement.scrollHeight
+            var pageH = Math.max(document.documentElement.scrollHeight, document.documentElement.clientHeight)
             //得到组件y轴位置
-            var selectY = $select.position().top
+            var selectY = $select.offset().top
             //得到容器高度
             var divH = $div.outerHeight()
             //得到btn的高度
@@ -111,7 +111,7 @@ VueUI.component('vue-select', {
             var marginTop = 0
             var fn = ''
 
-            if (divH >= (pageH-selectY)){
+            if ( (divH >= (pageH-selectY)) && (selectY >= divH) ){
                 marginTop = -(btnH + divH + 4)
                 scrollTop = 1e8
                 fn = 'addClass'

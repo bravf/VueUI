@@ -8,10 +8,10 @@
     </head>
     <body id="selectTest">
         <div style="padding:20px;">
-            <vue-select v-with="config:selectConf"></vue-select>
+            <vue-select v-with="config:selectConf" vue-id="mySelect"></vue-select>
         </div>
 
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <!-- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <div style="margin-bottom:200px"></div>
 
         <div class="btn-group">
@@ -24,7 +24,7 @@
 
         <div class="btn-group">
             <button class="btn btn-default" v-on="click:print">打印当前select值（在console里）</button>
-        </div>
+        </div> -->
 
     </body>
 </html>
@@ -36,7 +36,6 @@
 
 var selectConf = {
     data : [],
-    id : 'mySelect',
     width : 130,
     value : 3,
     onChange : function (value){
