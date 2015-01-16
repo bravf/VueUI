@@ -35,7 +35,7 @@
 <script>
 
 var selectConf = {
-    options : [],
+    data : [],
     id : 'mySelect',
     width : 130,
     value : 3
@@ -43,7 +43,7 @@ var selectConf = {
 
 function setOptions(n){
     for (var i=1; i<n; i++){
-        selectConf.options.push({
+        selectConf.data.push({
             value : i,
             text : '江苏省南通市' + i
         })
@@ -62,7 +62,10 @@ new Vue({
     },
     methods : {
         print : function (){
-            console.log(VueUI.getComponent('mySelect').getVal())
+            var VU_myselect = VueUI.getComponent('mySelect')
+            console.log(VU_myselect.value)
+            console.log(VU_myselect.text)
+            console.log(VU_myselect.index)
         }
     }
 })

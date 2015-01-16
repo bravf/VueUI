@@ -11,7 +11,7 @@ VueUI.component('vue-select', {
             '</button>' +
             '<div class="vue-select-options-div" v-style="display:display">' +
                 '<ul class="dropdown-menu vue-select-options-ul">' +
-                    '<li v-repeat="options" v-on="click:itemClick($index)" v-class="vue-select-option-curr:$index==index">' +
+                    '<li v-repeat="data" v-on="click:itemClick($index)" v-class="vue-select-option-curr:$index==index">' +
                         '<a href="javascript:;">{{text}}</a>' +
                     '</li>' +
                 '</ul>' +
@@ -22,7 +22,7 @@ VueUI.component('vue-select', {
         return {
             config : {},
             //数据
-            options : [],
+            data : [],
             //组件宽度
             width: 100,
             //是否显示options
@@ -36,7 +36,7 @@ VueUI.component('vue-select', {
         }
     },
     watch : {
-        options : function (){
+        data : function (){
             this.syncCurrByValue()
         },
         index : function (){
@@ -57,19 +57,12 @@ VueUI.component('vue-select', {
             this.index = idx
             this.toggleOptions()
         },
-        getVal : function (){
-            return {
-                value : this.value,
-                text : this.text,
-                index : this.index
-            }
-        },
         syncCurrByValue : function (){
-            if (!this.options.length){
+            if (!this.data.length){
                 return
             }
-            for (var i=0, option; i<this.options.length; i++){
-                option = this.options[i]
+            for (var i=0, option; i<this.data.length; i++){
+                option = this.data[i]
                 if (option.value == this.value){
                     this.index = i
                     this.text = option.text
@@ -79,7 +72,7 @@ VueUI.component('vue-select', {
             this.syncCurrByIndex()
         },
         syncCurrByIndex : function (){
-            var currOption = this.options[this.index]
+            var currOption = this.data[this.index]
             if (!currOption){
                 return
             }
