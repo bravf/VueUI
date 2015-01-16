@@ -28,6 +28,7 @@ VueUI.component('vue-pager', {
         },
         currPage : function (){
             this.getPageRange()
+            this.onChange(this.currPage)
         },
         prevShow : function (){
             this.getPageRange()
@@ -111,7 +112,6 @@ VueUI.component('vue-pager', {
 
             this.currPage = i
             this.getPageRange()
-            this.onChange(i)
         }
     },
     compiled : function (){

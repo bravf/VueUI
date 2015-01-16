@@ -32,7 +32,8 @@ VueUI.component('vue-select', {
             //当前文本
             text : '',
             //当前索引
-            index : 0
+            index : 0,
+            onChange : VueUI.emptyFunc
         }
     },
     watch : {
@@ -41,6 +42,7 @@ VueUI.component('vue-select', {
         },
         index : function (){
             this.syncCurrByIndex()
+            this.onChange(this.value, this.text, this.index)
         },
         value : function (){
             this.syncCurrByValue()

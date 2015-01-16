@@ -38,7 +38,10 @@ var selectConf = {
     data : [],
     id : 'mySelect',
     width : 130,
-    value : 3
+    value : 3,
+    onChange : function (value){
+        console.log(value)
+    }
 }
 
 function setOptions(n){
