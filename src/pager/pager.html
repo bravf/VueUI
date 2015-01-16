@@ -6,7 +6,7 @@
         <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body id="pagerTest">
-        <vue-pager v-with="config:pagerConf" vue-id="firstPager"></vue-pager>
+        <vue-pager v-with="config:pagerConf" v-ref="firstPager"></vue-pager>
 
         <div>
             <button class="btn btn-default" v-on="click:pagerConf.totalPage=200">改变总页码</button>
