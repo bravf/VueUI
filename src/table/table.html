@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8"/>
+        <title>VueUI-select</title>
+        <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="table.css">
+    </head>
+    <body id="tableTest">
+        <vue-table v-with="config:tableConf"></vue-table>
+    </body>
+</html>
+<script src="../../lib/jquery.js"></script>
+<script src="../../lib/vue.js"></script>
+<script src="../../lib/vueUI.js"></script>
+<script src="table.js"></script>
+<script>
+var tableConf = {}
+x = new Vue({
+    el : '#tableTest',
+    data : {
+        tableConf : tableConf
+    },
+    methods : {
+    }
+})
+</script>
