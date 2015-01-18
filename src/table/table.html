@@ -2,20 +2,46 @@
 <html lang="zh-cn">
     <head>
         <meta charset="utf-8"/>
-        <title>VueUI-select</title>
+        <title>VueUI-table</title>
         <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="table.css">
+        <link rel="stylesheet" href="../pager/pager.css">
     </head>
     <body id="tableTest">
-        <vue-table v-with="config:tableConf"></vue-table>
+        <div style="padding:20px">
+            <vue-table v-with="config:tableConf"></vue-table>
+        </div>
     </body>
 </html>
 <script src="../../lib/jquery.js"></script>
 <script src="../../lib/vue.js"></script>
 <script src="../../lib/vueUI.js"></script>
+<script src="../pager/pager.js"></script>
 <script src="table.js"></script>
 <script>
-var tableConf = {}
+var tableConf = {
+    columns : [
+        'name',
+        'math',
+        'chinese',
+        {'field':'english', 'text':'英语'}
+    ],
+    data : []
+}
+
+function getData(){
+    tableConf.data = []
+    for (var i=0; i<10; i++){
+        tableConf.data.push(
+            {name:'张三'+i, math:98, chinese:90, english:95}
+        )
+    }
+}
+
+setTimeout(function (){
+    getData()
+}, 100)
+
 x = new Vue({
     el : '#tableTest',
     data : {
