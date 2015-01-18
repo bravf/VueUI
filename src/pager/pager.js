@@ -5,7 +5,7 @@
 VueUI.component('vue-pager', {
     template :
     '<div class="vue-pager">' +
-        '<ul class="pagination pagination-sm">' +
+        '<ul class="pagination pagination-sm vue-pager-pagination">' +
             '<li v-repeat="pageRange" v-on="click:pageClick(num)" v-class="className">' +
                 '<a href="javascript:;">{{text}}</a>' +
             '</li>' +
