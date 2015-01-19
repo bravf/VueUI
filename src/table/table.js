@@ -9,9 +9,9 @@ VueUI.component('vue-table', {
                 '<th v-if="isCheckable" class="vue-table-cb-td">' +
                     '<input type="checkbox" v-on="change:masterCbChange" class="vue-table-master-cb"/>' +
                 '</th>' +
-                '<th v-repeat="c:columns" v-style="width:c.width, text-align:c.textAlign" class="vue-table-th" v-on="click:thClick($index)">' +
+                '<th v-repeat="c:columns" v-style="width:c.width, text-align:c.textAlign" class="vue-table-th">' +
                     '{{c.text}}' +
-                    '<span v-if="c.isSortable" class="glyphicon glyphicon-arrow-up vue-table-glyphicon-disabled"></span>' +
+                    '<span v-if="c.isSortable" class="glyphicon glyphicon-arrow-up vue-table-glyphicon-disabled" v-on="click:sortClick($index)"></span>' +
                 '</th>' +
             '</tr></thead>' +
             '<tbody>' +
@@ -67,7 +67,7 @@ VueUI.component('vue-table', {
         }
     },
     methods : {
-        thClick : function (idx){
+        sortClick : function (idx){
             var column = this.columns[idx]
             if (!column.isSortable){
                 return
