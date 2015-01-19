@@ -20,11 +20,13 @@
 <script src="table.js"></script>
 <script>
 var tableConf = {
+    //isShowHead : false,
+    //isShowFoot : false,
     columns : [
-        'name',
+        {'field':'name'},
         'math',
         'chinese',
-        {'field':'english', 'text':'英语'}
+        {'field':'english', 'text':'英语', 'textAlign':'left'}
     ],
     onPagerChange : function (num){
         getData(num)
