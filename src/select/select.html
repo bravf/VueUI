@@ -8,13 +8,14 @@
     </head>
     <body id="selectTest">
         <div style="padding-top:300px;">
-            <vue-select v-with="config:selectConf" v-ref="mySelect">
+            <vue-select v-with="config:selectConf" vue-model="step1.selectValue" vue-id="mySelect">
                 <option value="1">江苏省南通市1</option>
                 <option value="2">江苏省南通市2</option>
                 <option value="3">江苏省南通市3</option>
                 <option value="4">江苏省南通市4</option>
                 <option value="5">江苏省南通市5</option>
             </vue-select>
+            {{step1.selectValue}}
         </div>
 
 <!--         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -43,9 +44,8 @@
 var selectConf = {
     data : [],
     width : 130,
-    value : 3,
     onChange : function (value){
-        console.log(value)
+        //console.log(value)
     }
 }
 
@@ -66,11 +66,14 @@ function setOptions(n){
 x = new Vue({
     el : '#selectTest',
     data : {
-        selectConf : selectConf
+        selectConf : selectConf,
+        step1 : {
+            selectValue : 3
+        }
     },
     methods : {
         print : function (){
-            var vc_myselect = x.$.mySelect
+            var vc_myselect = VueUI.getComponent('mySelect')
             console.log(vc_myselect.value)
             console.log(vc_myselect.text)
             console.log(vc_myselect.index)
