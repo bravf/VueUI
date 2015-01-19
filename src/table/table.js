@@ -4,17 +4,20 @@
 
 VueUI.component('vue-table', {
     template :
-        '<table class="table table-condensed table-bordered table-hover">' +
+        '<table class="table table-bordered table-hover vue-table">' +
             '<thead v-if="isShowHead"><tr>' +
+                '<th v-if="isCheckable" class="vue-table-cb-td"><input type="checkbox" v-on="change:masterCbChange" class="vue-table-master-cb"/></th>' +
                 '<th v-repeat="c:columns" v-style="width:c.width, text-align:c.textAlign">{{c["text"]}}</th>' +
             '</tr></thead>' +
             '<tbody>' +
                 '<tr v-repeat="d:data">' +
+                    '<td v-if="isCheckable" class="vue-table-cb-td"><input type="checkbox" v-on="change:cbChange" class="vue-table-cb"/></td>' +
                     '<td v-repeat="c:columns" v-style="text-align:c.textAlign">{{d[c["field"]]}}</td>' +
                 '</tr>' +
             '</tbody>' +
-            '<tfoot v-if="isShowFoot"><tr><td colspan="{{columns.length}}" class="vue-table-pager-td">' +
-                '<vue-pager v-ref="pager" v-with="config:pagerConfig"></vue-pager>' +
+            '<tfoot v-if="isShowFoot"><tr><td colspan="{{columnsLen}}" class="vue-table-pager-td">' +
+                '<p class="vue-table-totalCount">共 {{totalCount}} 条结果</p>' +
+                '<div class="vue-table-pager"><vue-pager v-ref="pager" v-with="config:pagerConfig"></vue-pager></div>' +
             '</td></tr></tfoot>' +
         '</table>'
     ,
@@ -22,9 +25,12 @@ VueUI.component('vue-table', {
         return {
             config : {},
             data : [], //数据
+            totalCount : 0, // 数据总量
             columns : [], //列
+            columnsLen : 0, //总列数
             isShowHead : true, //是否显示表格头
             isShowFoot : true, //是否显示表格尾
+            isCheckable : false, //是否可以选择数据
 
             //分页相关参数
             pagerConfig : {
@@ -41,14 +47,39 @@ VueUI.component('vue-table', {
         },
         onPagerChange : function (){
             this.pagerConfig.onChange = this.onPagerChange
+        },
+        data : function (){
+            this.unCheckedMaster()
         }
     },
     methods : {
-        _handleColumns : function (){
+        masterCbChange : function (e){
+            var cbs = this.$$el.find('.vue-table-cb').prop('checked', e.target.checked)
+        },
+        cbChange : function (){
+            var me = this
+            var isAllChecked = true
+
+            me.$$el.find('.vue-table-cb').each(function (){
+                if (!this.checked){
+                    isAllChecked = false
+                    return false
+                }
+            })
+
+            me.$$el.find('.vue-table-master-cb').prop('checked', isAllChecked)
+        },
+        unCheckedMaster : function (){
+            if (!this.isCheckable){
+                return
+            }
+            this.$$el.find('.vue-table-master-cb').prop('checked', false)
+        },
+        handleColumns : function (){
             function getDefaultConf(){
                 return {
                     width : 150,
-                    textAlign : 'center'
+                    textAlign : 'left'
                 }
             }
 
@@ -84,9 +115,27 @@ VueUI.component('vue-table', {
             if (!hasAuto){
                 columns[len-1].width = 'auto'
             }
+        },
+        getChecked : function (){
+            var me = this
+            var data = []
+
+            me.$$el.find('.vue-table-cb').each(function (idx){
+                if ($(this).prop('checked')){
+                    data.push(me.data[idx])
+                }
+            })
+
+            return data
         }
     },
     compiled : function (){
-        this._handleColumns()
+        this.$$el = $(this.$el)
+        this.handleColumns()
+
+        this.columnsLen = this.columns.length
+        if (this.isCheckable){
+            this.columnsLen++
+        }
     }
 })

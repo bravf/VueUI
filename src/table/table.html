@@ -22,6 +22,7 @@
 var tableConf = {
     //isShowHead : false,
     //isShowFoot : false,
+    //isCheckable : true,
     columns : [
         {'field':'name'},
         'math',
@@ -45,6 +46,7 @@ function _getData(pagerNum){
 
     myTable.data = data
     myTable.totalPage = 10
+    myTable.totalCount = 234
     myTable.onPagerChange = function (num){
         getData(num)
         console.log(pagerNum + '_' + num)
