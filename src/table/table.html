@@ -9,7 +9,7 @@
     </head>
     <body id="tableTest">
         <div style="padding:20px">
-            <vue-table v-with="config:tableConf"></vue-table>
+            <vue-table v-with="config:tableConf" v-ref="myTable" vue-id="myTable"></vue-table>
         </div>
     </body>
 </html>
@@ -26,21 +26,34 @@ var tableConf = {
         'chinese',
         {'field':'english', 'text':'英语'}
     ],
-    data : []
-}
-
-function getData(){
-    tableConf.data = []
-    for (var i=0; i<10; i++){
-        tableConf.data.push(
-            {name:'张三'+i, math:98, chinese:90, english:95}
-        )
+    onPagerChange : function (num){
+        getData(num)
     }
 }
 
-setTimeout(function (){
-    getData()
-}, 100)
+function _getData(pagerNum){
+    var myTable = VueUI.getComponent('myTable')
+
+    var data = []
+    for (var i=0; i<10; i++){
+        data.push(
+            {name:pagerNum+'_张三'+i, math:98, chinese:90, english:95}
+        )
+    }
+
+    myTable.data = data
+    myTable.totalPage = 10
+    myTable.onPagerChange = function (num){
+        getData(num)
+        console.log(pagerNum + '_' + num)
+    }
+}
+
+function getData(pagerNum){
+    setTimeout(function (){
+        _getData(pagerNum)
+    }, 100)
+}
 
 x = new Vue({
     el : '#tableTest',
@@ -50,4 +63,6 @@ x = new Vue({
     methods : {
     }
 })
+
+getData(1)
 </script>

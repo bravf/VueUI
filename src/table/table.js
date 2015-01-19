@@ -14,20 +14,32 @@ VueUI.component('vue-table', {
                 '</tr>' +
             '</tbody>' +
             '<tfoot><tr><td colspan="{{columns.length}}" class="vue-table-pager-td">' +
-                '<vue-pager v-ref="pager"></vue-pager>' +
+                '<vue-pager v-ref="pager" v-with="config:pagerConfig"></vue-pager>' +
             '</td></tr></tfoot>' +
         '</table>'
     ,
     data : function (){
         return {
             config : {},
-            //数据
-            data :[],
-            //列
-            columns : []
+            data : [], //数据
+            columns : [], //列
+
+            //分页相关参数
+            pagerConfig : {
+                totalPage : 0,
+                onChange : VueUI.emptyFunc
+            },
+            totalPage : 0,
+            onPagerChange : VueUI.emptyFunc
         }
     },
     watch : {
+        totalPage : function (){
+            this.pagerConfig.totalPage = this.totalPage
+        },
+        onPagerChange : function (){
+            this.pagerConfig.onChange = this.onPagerChange
+        }
     },
     methods : {
     },
@@ -42,8 +54,5 @@ VueUI.component('vue-table', {
                 }
             }
         }
-        //处理pager
-        console.log(this.$.pager)
-        this.$.pager.totalPage = 100
     }
 })
