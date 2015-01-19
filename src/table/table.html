@@ -22,15 +22,19 @@
 var tableConf = {
     //isShowHead : false,
     //isShowFoot : false,
-    //isCheckable : true,
+    isCheckable : true,
     columns : [
-        {'field':'name'},
+        {'field':'name', 'isSortable':true},
         'math',
         'chinese',
-        {'field':'english', 'text':'英语', 'textAlign':'left'}
+        {'field':'english', 'text':'英语', 'textAlign':'left','isSortable':true}
     ],
     onPagerChange : function (num){
         getData(num)
+    },
+    onSortChange : function (field, dir){
+        console.log(field)
+        console.log(dir)
     }
 }
 

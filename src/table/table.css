@@ -18,3 +18,16 @@
     width: 50px;
     text-align: center;
 }
+.vue-table-th{
+    position: relative;
+}
+.vue-table-th .glyphicon{
+    position: relative;
+    left: 5px;
+    top: 2px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.vue-table-glyphicon-disabled{
+    color: #999;
+}

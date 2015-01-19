@@ -6,8 +6,13 @@ VueUI.component('vue-table', {
     template :
         '<table class="table table-bordered table-hover vue-table">' +
             '<thead v-if="isShowHead"><tr>' +
-                '<th v-if="isCheckable" class="vue-table-cb-td"><input type="checkbox" v-on="change:masterCbChange" class="vue-table-master-cb"/></th>' +
-                '<th v-repeat="c:columns" v-style="width:c.width, text-align:c.textAlign">{{c["text"]}}</th>' +
+                '<th v-if="isCheckable" class="vue-table-cb-td">' +
+                    '<input type="checkbox" v-on="change:masterCbChange" class="vue-table-master-cb"/>' +
+                '</th>' +
+                '<th v-repeat="c:columns" v-style="width:c.width, text-align:c.textAlign" class="vue-table-th" v-on="click:thClick($index)">' +
+                    '{{c.text}}' +
+                    '<span v-if="c.isSortable" class="glyphicon glyphicon-arrow-up vue-table-glyphicon-disabled"></span>' +
+                '</th>' +
             '</tr></thead>' +
             '<tbody>' +
                 '<tr v-repeat="d:data">' +
@@ -31,6 +36,9 @@ VueUI.component('vue-table', {
             isShowHead : true, //是否显示表格头
             isShowFoot : true, //是否显示表格尾
             isCheckable : false, //是否可以选择数据
+            sortField : '', //当前排序字段
+            sortDir : 0, //0表示降序，1表示升序
+            onSortChange : VueUI.emptyFunc, //当排序信息改变
 
             //分页相关参数
             pagerConfig : {
@@ -50,9 +58,45 @@ VueUI.component('vue-table', {
         },
         data : function (){
             this.unCheckedMaster()
+        },
+        sortField : function (){
+            this.syncSort()
+        },
+        sortDir : function (){
+            this.syncSort()
         }
     },
     methods : {
+        thClick : function (idx){
+            var column = this.columns[idx]
+            if (!column.isSortable){
+                return
+            }
+
+            this.sortField = column.field
+            column.sortDir = (column.sortDir=='0') ? '1' : '0'
+            this.sortDir = column.sortDir
+
+            this.onSortChange(this.sortField, this.sortDir)
+        },
+        syncSort : function (){ //同步排序相关
+            var me = this
+            var columns = me.columns
+
+            me.$$el.find('.vue-table-th').each(function (idx){
+                var arrow = $(this).find('.glyphicon')
+                if (!arrow.length){
+                    return
+                }
+                if (me.sortField == columns[idx].field){
+                    arrow.attr('class', 'glyphicon glyphicon-arrow-' + ['up', 'down'][me.sortDir])
+                }
+                else {
+                    arrow.addClass('vue-table-glyphicon-disabled')
+                }
+            })
+
+        },
         masterCbChange : function (e){
             var cbs = this.$$el.find('.vue-table-cb').prop('checked', e.target.checked)
         },
@@ -79,7 +123,8 @@ VueUI.component('vue-table', {
             function getDefaultConf(){
                 return {
                     width : 150,
-                    textAlign : 'left'
+                    textAlign : 'left',
+                    isSortable : false
                 }
             }
 
@@ -135,7 +180,7 @@ VueUI.component('vue-table', {
 
         this.columnsLen = this.columns.length
         if (this.isCheckable){
-            this.columnsLen++
+            this.columnsLen ++
         }
     }
 })
