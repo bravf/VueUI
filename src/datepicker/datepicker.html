@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8"/>
+        <title>VueUI-datepicker</title>
+        <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="datepicker.css" rel="stylesheet">
+    </head>
+    <body id="datepickerTest">
+        <vue-datepicker v-with="config:datepickerConf"></vue-datepicker>
+    </body>
+</html>
+<script src="../../lib/jquery.js"></script>
+<script src="../../lib/vue.js"></script>
+<script src="../../lib/vueUI.js"></script>
+<script src="datepicker.js"></script>
+
+<script>
+var datepickerConf = {}
+var x = new Vue({
+    el : '#datepickerTest'
+})
+</script>
