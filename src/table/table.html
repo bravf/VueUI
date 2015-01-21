@@ -9,8 +9,10 @@
     </head>
     <body id="tableTest">
         <div style="padding:20px">
-            <vue-table v-with="config:tableConf" v-ref="myTable" vue-id="myTable"></vue-table>
+            <vue-table v-with="config:tableConf" vue-id="myTable"></vue-table>
         </div>
+        <button class="btn btn-default" v-on="click:getData">获取数据</button>
+        <button class="btn btn-default" v-on="click:clearData">清空数据</button>
     </body>
 </html>
 <script src="../../lib/jquery.js"></script>
@@ -69,8 +71,15 @@ x = new Vue({
         tableConf : tableConf
     },
     methods : {
+        getData : function (){
+            getData(1)
+        },
+        clearData : function (){
+            var myTable = VueUI.getComponent('myTable')
+            myTable.data = []
+            myTable.totalPage = 0
+            myTable.totalCount = 0
+        }
     }
 })
-
-getData(1)
 </script>

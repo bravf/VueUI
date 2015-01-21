@@ -15,7 +15,8 @@ VueUI.component('vue-table', {
                 '</th>' +
             '</tr></thead>' +
             '<tbody>' +
-                '<tr v-repeat="d:data">' +
+                '<tr v-if="!data.length"><td colspan="{{columnsLen}}" class="vue-table-empty">没有任何数据</td></tr>' +
+                '<tr v-if="data.length" v-repeat="d:data">' +
                     '<td v-if="isCheckable" class="vue-table-cb-td"><input type="checkbox" v-on="change:cbChange" class="vue-table-cb"/></td>' +
                     '<td v-repeat="c:columns" v-style="text-align:c.textAlign">{{d[c["field"]]}}</td>' +
                 '</tr>' +
@@ -132,7 +133,6 @@ VueUI.component('vue-table', {
             if (!columns.length){
                 return
             }
-
 
             var me = this
             var hasAuto = false //检查是否有width=auto的列，不然就设置最后一项width=auto

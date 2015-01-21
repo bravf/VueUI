@@ -31,3 +31,7 @@
 .vue-table-glyphicon-disabled{
     color: #999;
 }
+.vue-table-empty{
+    text-align: center;
+    line-height: 60px!important;
+}
