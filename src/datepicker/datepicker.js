@@ -42,6 +42,12 @@ VueUI.component('vue-datepicker', {
     watch : {
         currDate : function (){
             this.getDateRange()
+        },
+        value : function (){
+            var valueDate = this.parse(this.value)
+            if (valueDate){
+                this.currDate = valueDate
+            }
         }
     },
     methods : {
