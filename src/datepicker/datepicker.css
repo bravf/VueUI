@@ -1,7 +1,15 @@
 .vue-datepicker{
+    position: relative;
+}
+.vue-datepicker-input{
+    width: 186px;
+}
+.vue-datepicker-popup{
     position: absolute;
     border: 1px solid #ccc;
     padding: 10px;
+    display: none;
+    background: #fff;
 }
 .vue-datepicker-inner{
     width: 232px;
@@ -26,7 +34,7 @@
 }
 .vue-datepicker-dateRange span{
 }
-.vue-datepicker-dateRange span:hover{
+.vue-datepicker-dateRange span:hover, .vue-datepicker-dateRange-item-hover{
     background-color : #dbebff;
 }
 .vue-datepicker-weekRange{
@@ -49,6 +57,7 @@
 }
 .vue-datepicker-ctrl i{
     position: absolute;
+    cursor: pointer;
 }
 .vue-datepicker-preMonthBtn{
     left: 0;
