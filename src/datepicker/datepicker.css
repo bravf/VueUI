@@ -1,5 +1,6 @@
 .vue-datepicker{
     position: relative;
+    display: inline-block;
 }
 .vue-datepicker-input{
     width: 186px;
@@ -7,12 +8,14 @@
 .vue-datepicker-popup{
     position: absolute;
     border: 1px solid #ccc;
+    border-radius: 5px;
     padding: 10px;
     display: none;
     background: #fff;
+    margin-top: 2px;
 }
 .vue-datepicker-inner{
-    width: 232px;
+    width: 218px;
     border: 1px solid #ccc;
 }
 .vue-datepicker-body{
@@ -20,9 +23,9 @@
 }
 .vue-datepicker-body span{
     display: inline-block;
-    width: 30px;
-    line-height: 30px;
-    height: 30px;
+    width: 28px;
+    line-height: 28px;
+    height: 28px;
     text-align: center;
     cursor: pointer;
 }

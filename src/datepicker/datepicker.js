@@ -4,8 +4,8 @@
 
 VueUI.component('vue-datepicker', {
     template :
-        '<div class="vue-datepicker">' +
-            '<input class="form-control vue-datepicker-input" type="text"/ v-on="click:inputClick">' +
+        '<div class="vue-datepicker" v-on="click:datepickerClick">' +
+            '<input class="form-control vue-datepicker-input" type="text" v-on="click:inputClick" v-model="value"/>' +
             '<div class="vue-datepicker-popup" v-style="display:popupDisplay">' +
                 '<div class="vue-datepicker-inner">' +
                     '<div class="vue-datepicker-head">' +
@@ -45,8 +45,11 @@ VueUI.component('vue-datepicker', {
         }
     },
     methods : {
-        inputClick : function (){
+        inputClick : function (e){
             this.popupDisplay = this.popupDisplay=='none' ? 'block' : 'none'
+        },
+        datepickerClick : function (e){
+            e.stopPropagation()
         },
         preNextMonthClick : function (flag){
             var year = this.currDate.getFullYear()
@@ -65,7 +68,7 @@ VueUI.component('vue-datepicker', {
         itemClick : function (date){
             this.currDate = date
             this.value = this.stringify(this.currDate)
-            console.log(this.value)
+            this.popupDisplay = 'none'
         },
         getYearMonth : function (year, month){
             if (month > 11){
@@ -191,6 +194,11 @@ VueUI.component('vue-datepicker', {
         }
     },
     compiled : function (){
-        this.getDateRange()
+        var me = this
+        me.getDateRange()
+
+        $(window).on('click', function (){
+            me.popupDisplay = 'none'
+        })
     }
 })
