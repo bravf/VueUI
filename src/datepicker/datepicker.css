@@ -17,6 +17,7 @@
 .vue-datepicker-inner{
     width: 218px;
     border: 1px solid #ccc;
+    border-radius: 5px;
 }
 .vue-datepicker-body{
     padding: 5px 10px;
@@ -61,10 +62,11 @@
 .vue-datepicker-ctrl i{
     position: absolute;
     cursor: pointer;
+    top: 5px;
 }
 .vue-datepicker-preMonthBtn{
-    left: 0;
+    left: 2px;
 }
 .vue-datepicker-nextMonthBtn{
-    right: 0;
+    right: 2px;
 }

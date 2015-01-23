@@ -10,6 +10,7 @@
     position: relative;
     height: 34px;
     padding-right: 22px!important;
+    font-size: 14px;
 }
 .vue-select-btn-text{
     display: inline-block;
