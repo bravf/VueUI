@@ -141,8 +141,6 @@ VueUI.component('vue-select', {
 
         var $dom = $(this.$el)
         var $btn = $dom.find('.vue-select-btn')
-        var $optionsDiv = $dom.find('.vue-select-options-div')
-        var $caret = $btn.find('.caret')
 
         //检查是否有硬编码的option
         var $options = $dom.find('option')
@@ -158,9 +156,7 @@ VueUI.component('vue-select', {
         }
 
         //设置各种宽度
-        $btn.outerWidth(this.width)
-        $optionsDiv.outerWidth(this.width)
-
+        $dom.find('.vue-select').outerWidth(this.width)
         $btn.find('.vue-select-btn-text').width(this.width - 35)
 
         //设置全局事件
