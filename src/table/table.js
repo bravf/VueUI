@@ -15,10 +15,10 @@ VueUI.component('vue-table', {
                 '</th>' +
             '</tr></thead>' +
             '<tbody>' +
-                '<tr v-if="!data.length"><td colspan="{{columnsLen}}" class="vue-table-empty">没有任何数据</td></tr>' +
-                '<tr v-if="data.length" v-repeat="d:data">' +
+                '<tr v-show="!data.length"><td colspan="{{columnsLen}}" class="vue-table-empty">没有任何数据</td></tr>' +
+                '<tr v-show="data.length" v-repeat="d:data">' +
                     '<td v-if="isCheckable" class="vue-table-cb-td"><input type="checkbox" v-on="change:cbChange" class="vue-table-cb"/></td>' +
-                    '<td v-repeat="c:columns" v-style="text-align:c.textAlign">{{d[c["field"]]}}</td>' +
+                    '<td v-repeat="c:columns" v-style="text-align:c.textAlign">{{{d[c["field"]]}}}</td>' +
                 '</tr>' +
             '</tbody>' +
             '<tfoot v-if="isShowFoot"><tr><td colspan="{{columnsLen}}" class="vue-table-pager-td">' +
@@ -58,7 +58,14 @@ VueUI.component('vue-table', {
             this.pagerConfig.onChange = this.onPagerChange
         },
         data : function (){
+            var me = this
             this.unCheckedMaster()
+
+            if (this.data.length > 0){
+                Vue.nextTick(function (){
+                    me.compiledTds()
+                })
+            }
         },
         sortField : function (){
             this.syncSort()
@@ -68,6 +75,12 @@ VueUI.component('vue-table', {
         }
     },
     methods : {
+        compiledTds : function (){
+            var me = this
+            me.$$el.find('tbody td').each(function (){
+                me.$compile(this)
+            })
+        },
         sortClick : function (idx){
             var column = this.columns[idx]
             if (!column.isSortable){
@@ -160,6 +173,8 @@ VueUI.component('vue-table', {
             if (!hasAuto){
                 columns[len-1].width = 'auto'
             }
+
+            this.columns = columns.slice()
         },
         getChecked : function (){
             var me = this

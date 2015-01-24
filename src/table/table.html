@@ -35,7 +35,8 @@ var tableConf = {
         {'field':'name', 'isSortable':true},
         'math',
         'chinese',
-        {'field':'english', 'text':'英语', 'textAlign':'left','isSortable':true}
+        {'field':'english', 'text':'英语', 'textAlign':'left','isSortable':true},
+        'operate'
     ],
     onPagerChange : function (num){
         getData(num)
@@ -43,6 +44,9 @@ var tableConf = {
     onSortChange : function (field, dir){
         console.log(field)
         console.log(dir)
+    },
+    myAlert : function (){
+        alert('hehe')
     }
 }
 
@@ -52,7 +56,13 @@ function _getData(pagerNum){
     var data = []
     for (var i=0; i<10; i++){
         data.push(
-            {name:pagerNum+'_张三'+i, math:98, chinese:90, english:95}
+            {
+                name:pagerNum+'_张三'+i,
+                math:98,
+                chinese:90,
+                english:95,
+                operate:'<a href="#" v-on="click:myAlert">详情</a>'
+            }
         )
     }
 
