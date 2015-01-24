@@ -173,8 +173,6 @@ VueUI.component('vue-table', {
             if (!hasAuto){
                 columns[len-1].width = 'auto'
             }
-
-            this.columns = columns.slice()
         },
         getChecked : function (){
             var me = this
