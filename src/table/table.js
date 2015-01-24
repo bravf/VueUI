@@ -62,9 +62,7 @@ VueUI.component('vue-table', {
             this.unCheckedMaster()
 
             if (this.data.length > 0){
-                Vue.nextTick(function (){
-                    me.compiledTds()
-                })
+                me.compiledTds()
             }
         },
         sortField : function (){

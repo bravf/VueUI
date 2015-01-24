@@ -45,8 +45,8 @@ var tableConf = {
         console.log(field)
         console.log(dir)
     },
-    myAlert : function (){
-        alert('hehe')
+    myAlert : function (num){
+        alert(num)
     }
 }
 
@@ -54,14 +54,14 @@ function _getData(pagerNum){
     var myTable = VueUI.getComponent('myTable')
 
     var data = []
-    for (var i=0; i<1000; i++){
+    for (var i=0; i<10; i++){
         data.push(
             {
                 name:pagerNum+'_张三'+i,
                 math:98,
                 chinese:90,
                 english:95,
-                operate:'<a href="javascript:;" v-on="click:myAlert">详情</a>'
+                operate:'<a href="javascript:;" v-on="click:myAlert(\'' + 98 +'\')">详情</a>'
             }
         )
     }
