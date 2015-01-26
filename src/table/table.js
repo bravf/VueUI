@@ -62,7 +62,7 @@ VueUI.component('vue-table', {
             this.unCheckedMaster()
 
             if (this.data.length > 0){
-                me.compiledTds()
+                me.compileTbody()
             }
         },
         sortField : function (){
@@ -73,11 +73,8 @@ VueUI.component('vue-table', {
         }
     },
     methods : {
-        compiledTds : function (){
-            var me = this
-            me.$$el.find('tbody td').each(function (){
-                me.$compile(this)
-            })
+        compileTbody : function (){
+            this.$compile(this.$el.getElementsByTagName('tbody')[0])
         },
         sortClick : function (idx){
             var column = this.columns[idx]
