@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <title>VueUI-select</title>
         <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="select.css">
+        <link href="../../dist/vueUI.css" rel="stylesheet">
         <style type="text/css">
         @import url("http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
         *{
@@ -15,11 +15,11 @@
     <body id="selectTest">
         <div style="padding-top:300px;padding-left:50px;">
             <vue-select v-with="config:selectConf" vue-model="step1.selectValue" vue-id="mySelect">
-                <option value="1">江苏省南通市1</option>
+               <!--  <option value="1">江苏省南通市1</option>
                 <option value="2">江苏省南通市2</option>
                 <option value="3">江苏省南通市3</option>
                 <option value="4">江苏省南通市4</option>
-                <option value="5">江苏省南通市5</option>
+                <option value="5">江苏省南通市5</option> -->
             </vue-select>
             {{step1.selectValue}}
         </div>
@@ -43,8 +43,7 @@
 </html>
 <script src="../../lib/jquery.js"></script>
 <script src="../../lib/vue.js"></script>
-<script src="../../lib/vueUI.js"></script>
-<script src="select.js"></script>
+<script src="../../dist/vueUI.js"></script>
 <script>
 
 var selectConf = {
@@ -64,7 +63,7 @@ function setOptions(n){
     }
 }
 
-// setOptions(100)
+ setOptions(100)
 // setTimeout(function (){
 //     setOptions(100)
 // }, 400)

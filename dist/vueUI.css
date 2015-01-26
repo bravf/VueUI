@@ -1,0 +1,170 @@
+.vue-datepicker{
+    position: relative;
+    display: inline-block;
+}
+.vue-datepicker-input{
+    width: 186px;
+}
+.vue-datepicker-popup{
+    position: absolute;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+    background: #fff;
+    margin-top: 2px;
+}
+.vue-datepicker-inner{
+    width: 218px;
+    border: 1px solid #ccc;
+}
+.vue-datepicker-body{
+    padding: 5px 10px;
+}
+.vue-datepicker-body span{
+    display: inline-block;
+    width: 28px;
+    line-height: 28px;
+    height: 28px;
+    text-align: center;
+    cursor: pointer;
+}
+.vue-datepicker-item-gray{
+    color: #999;
+}
+.vue-datepicker-item-red{
+    color: #ff5555;
+}
+.vue-datepicker-dateRange span{
+}
+.vue-datepicker-dateRange span:hover, .vue-datepicker-dateRange-item-hover{
+    background-color : #dbebff;
+}
+.vue-datepicker-weekRange{
+    border-bottom: 1px solid #ccc;
+}
+.vue-datepicker-label{
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 700;
+    padding: 7px 0;
+    text-align: center;
+}
+.vue-datepicker-ctrl{
+    position: relative;
+    height: 30px;
+    line-height: 30px;
+    color: #3775c0;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+.vue-datepicker-ctrl i{
+    position: absolute;
+    cursor: pointer;
+    top: 5px;
+}
+.vue-datepicker-preMonthBtn{
+    left: 2px;
+}
+.vue-datepicker-nextMonthBtn{
+    right: 2px;
+}
+
+.vue-pager{
+    font-size: 0;
+}
+.vue-pager-pagination{
+    margin: 0;
+}
+.vue-select{
+    position: relative;
+    height: 34px;
+}
+.vue-select-content{
+    display: none;
+}
+.vue-select-btn{
+    text-align: left;
+    position: relative;
+    height: 34px;
+    padding-right: 22px!important;
+    font-size: 14px;
+}
+.vue-select-btn-text{
+    display: inline-block;
+    overflow: hidden;
+}
+.vue-select-btn .caret{
+    position: absolute;
+    right: 8px;
+    top: 14px;
+}
+.vue-select-options-div{
+    position: relative;
+    max-height: 270px;
+    overflow: scroll;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    top: 2px;
+    z-index: 10000;
+}
+.vue-select-options-ul{
+    position: static;
+    float: none;
+    display: block;
+    min-width: 0!important;
+    margin: 0;
+    border: none;
+}
+.vue-select-options-ul li:hover{
+    background: #f5f5f5;
+}
+.vue-select-options-ul a{
+    padding: 3px 12px!important;
+    overflow: hidden;
+    text-decoration: none;
+}
+.vue-select-option-curr{
+    background: #f5f5f5;
+}
+.vue-select-options-ul-scaleY, .vue-select-options-ul-scaleY li{
+    transform:scaleY(-1);
+    -webkit-transform:scaleY(-1);
+}
+.vue-table{}
+.vue-table-pager-td{
+    text-align: right;
+    overflow: hidden;
+}
+.vue-table-totalCount{
+    float: left;
+    margin: 0;
+    margin-top: 5px;
+}
+.vue-table-pager{
+    float: right;
+}
+.vue-table thead, .vue-table tfoot{
+    background-color: #f8f8f8;
+}
+.vue-table-cb-td{
+    width: 50px;
+    text-align: center;
+}
+.vue-table-th{
+    position: relative;
+}
+.vue-table-th .glyphicon{
+    position: relative;
+    left: 5px;
+    top: 2px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.vue-table-glyphicon-disabled{
+    color: #999;
+}
+.vue-table-empty{
+    text-align: center;
+    line-height: 60px!important;
+}
