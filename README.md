@@ -6,7 +6,7 @@ VueUI
 <script src="dist/vueUI.js"></script>
 ```
 
-## datepicker组件
+## datepicker组件 ([Demo][1])
 ```
 html:
 <div id="datepickerTest">
@@ -23,7 +23,7 @@ new Vue({
 })
 ```
 
-## pager组件
+## pager组件 ([Demo][2])
 ```
 html:
 <div id="pagerTest">
@@ -50,7 +50,7 @@ new Vue({
 })
 ```
 
-## select组件
+## select组件 ([Demo][3])
 ```
 html:
 <vue-select v-with="config:selectConf" vue-model="step1.selectValue" vue-id="mySelect">
@@ -81,7 +81,7 @@ new Vue({
 //selectConf.data = [{value:'',text:''},...]
 //VueUI.getComponent('mySelect')
 ```
-##table组件
+##table组件 ([Demo][4])
 ```
 html:
 <vue-table v-with="config:tableConf" vue-id="myTable"></vue-table>
@@ -113,7 +113,7 @@ new Vue({
     }
 })
 ```
-##modal(模态框)
+##modal(模态框 [Demo][5])
 ```
 //内置alert,confirm行为和浏览器自带方法一致
 VueUI.alert('hello,world!')
@@ -159,3 +159,10 @@ new Vue({
     }
 }
 ```
+
+
+  [1]: http://runjs.cn/code/yamvreus
+  [2]: http://runjs.cn/code/4abmqavu
+  [3]: http://runjs.cn/code/z0dcccbo
+  [4]: http://runjs.cn/code/31opvmzw
+  [5]: http://runjs.cn/code/22u2abu6
