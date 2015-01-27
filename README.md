@@ -113,3 +113,49 @@ new Vue({
     }
 })
 ```
+##modal(模态框)
+```
+//内置alert,confirm行为和浏览器自带方法一致
+VueUI.alert('hello,world!')
+VueUI.alert({
+    title : '', //可选，如果为空则被document.title取代
+    content : 'hello,world',
+    okCallback : function (){} //可选，当点击确认按钮后发生的操作
+})
+
+VueUI.confirm({
+    title : '', //可选，如果为空则被document.title取代
+    content : 'hello,world',
+    okCallback : function (){}, //可选，当点击确认按钮后发生的操作
+    cancelCallback : function (){} //可选，当点击取消按钮后发生的操作
+})
+```
+
+```
+//自定义模态框
+
+//html
+<vue-modal v-with="config:conf" vue-id="logModal">
+    <h4>日志列表</h4>
+    <vue-table v-with="config:tableConf"></vue-table>
+</vue-modal>
+<button class="btn btn-default" v-on="click:vModal">modal</button>
+
+//js
+new Vue({
+    el : '#pagerTest',
+    data : {
+        conf : {
+            width : 600
+        },
+        tableConf : {
+            columns : ['id', 'name', 'math']
+        }
+    },
+    methods : {
+        vModal : function (){
+            VueUI.getComponent('logModal').toggle = true
+        }
+    }
+}
+```
