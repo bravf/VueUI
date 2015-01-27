@@ -70,6 +70,8 @@
     right: 2px;
 }
 
+.vue-modal{
+    display: block;
 .vue-pager{
     font-size: 0;
 }
