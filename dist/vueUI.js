@@ -302,6 +302,7 @@ VueUI.component('vue-datepicker', {
 VueUI.component('vue-modal', {
     template :
         '<div class="modal vue-modal" v-show="toggle">' +
+            '<div class="vue-modal-content"><content></content></div>' +
             '<div class="modal-backdrop fade in"></div>' +
             '<div class="modal-dialog" v-style="width:width+\'px\'">' +
                 '<div class="modal-content">' +
@@ -312,7 +313,7 @@ VueUI.component('vue-modal', {
                     '<div class="modal-body">' +
                         '{{{content}}}' +
                     '</div>' +
-                    '<div class="modal-footer">' +
+                    '<div class="modal-footer" v-show="isShowCancelBtn || isShowOkBtn">' +
                         '<button type="button" class="btn btn-default" v-on="click:cancelBtnClick" v-show="isShowCancelBtn">{{cancelBtnText}}</button>' +
                         '<button type="button" class="btn btn-primary" v-on="click:okBtnClick" v-show="isShowOkBtn">{{okBtnText}}</button>' +
                     '</div>' +
@@ -330,11 +331,11 @@ VueUI.component('vue-modal', {
             width : 500, //宽度
 
             // 按钮相关
-            isShowCancelBtn : true,
+            isShowCancelBtn : false,
             cancelBtnText : '取消',
             cancelBtnCallback : VueUI.emptyFunc,
 
-            isShowOkBtn : true,
+            isShowOkBtn : false,
             okBtnText : '确认',
             okBtnCallback : VueUI.emptyFunc,
         }
@@ -343,8 +344,8 @@ VueUI.component('vue-modal', {
         content : function (){
             this.$compile(this.$el.querySelector('.modal-body'))
         },
-        toggle : function (){
-            //document.body.style.overflow = (this.toggle ? 'hidden' : 'auto')
+        title : function (){
+            this.title = this.title || document.title
         }
     },
     methods : {
@@ -358,9 +359,9 @@ VueUI.component('vue-modal', {
         }
     },
     compiled : function (){
-        if (!this.title){
-            this.title = document.title
-        }
+        this.title = this.title || document.title
+        this.$$el = $(this.$el)
+        this.$$el.find('.modal-body').append(this.$$el.find('.vue-modal-content').show())
     }
 })
 
@@ -376,9 +377,12 @@ new function (){
         el : '#VueUIAlertConfirm',
         data : {
             VueUIAlertConf : {
-                isShowCancelBtn : false
+                isShowOkBtn : true
             },
-            VueUIConfirmConf : {}
+            VueUIConfirmConf : {
+                isShowOkBtn : true,
+                isShowCancelBtn : true
+            }
         }
     })
 
@@ -392,7 +396,7 @@ new function (){
             alertVU.okBtnCallback = VueUI.emptyFunc
         }
         else {
-            alertVU.title = conf.title || document.title
+            alertVU.title = conf.title
             alertVU.content = conf.content || ''
             alertVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
         }
@@ -400,7 +404,7 @@ new function (){
     }
 
     VueUI.confirm = function (conf){
-        confirmVU.title = conf.title || document.title
+        confirmVU.title = conf.title
         confirmVU.content = conf.content || '',
         confirmVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
         confirmVU.cancelBtnCallback = conf.cancelCallback || VueUI.emptyFunc

@@ -72,6 +72,10 @@
 
 .vue-modal{
     display: block;
+}
+.vue-modal-content{
+    display: none;
+}
 .vue-pager{
     font-size: 0;
 }

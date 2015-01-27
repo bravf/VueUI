@@ -16,7 +16,12 @@
 
         <button class="btn btn-default" v-on="click:vAlert">alert</button>
         <button class="btn btn-default" v-on="click:vConfirm">confirm</button>
-        <!-- <vue-modal v-with="config:conf"></vue-modal> -->
+        <button class="btn btn-default" v-on="click:vModal">modal</button>
+
+        <vue-modal v-with="config:conf" vue-id="logModal">
+            <h4>日志列表</h4>
+            <vue-table v-with="config:tableConf"></vue-table>
+        </vue-modal>
     </body>
 </html>
 <script src="../../lib/jquery.js"></script>
@@ -27,7 +32,12 @@
 new Vue({
     el : '#pagerTest',
     data : {
-        conf : {}
+        conf : {
+            width : 600
+        },
+        tableConf : {
+            columns : ['id', 'name', 'math']
+        }
     },
     methods : {
         vAlert : function (){
@@ -49,8 +59,10 @@ new Vue({
                     VueUI.alert('好个屁')
                 }
             })
+        },
+        vModal : function (){
+            VueUI.getComponent('logModal').toggle = true
         }
     }
 })
-
 </script>
