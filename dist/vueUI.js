@@ -302,7 +302,6 @@ VueUI.component('vue-datepicker', {
 VueUI.component('vue-modal', {
     template :
         '<div class="modal vue-modal" v-show="toggle">' +
-            '<div class="vue-modal-content"><content></content></div>' +
             '<div class="modal-backdrop fade in"></div>' +
             '<div class="modal-dialog" v-style="width:width+\'px\'">' +
                 '<div class="modal-content">' +
@@ -312,6 +311,7 @@ VueUI.component('vue-modal', {
                     '</div>' +
                     '<div class="modal-body">' +
                         '{{{content}}}' +
+                        '<content></content>' +
                     '</div>' +
                     '<div class="modal-footer" v-show="isShowCancelBtn || isShowOkBtn">' +
                         '<button type="button" class="btn btn-default" v-on="click:cancelBtnClick" v-show="isShowCancelBtn">{{cancelBtnText}}</button>' +
@@ -360,8 +360,6 @@ VueUI.component('vue-modal', {
     },
     compiled : function (){
         this.title = this.title || document.title
-        this.$$el = $(this.$el)
-        this.$$el.find('.modal-body').append(this.$$el.find('.vue-modal-content').show())
     }
 })
 
