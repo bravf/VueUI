@@ -3,12 +3,7 @@
 */
 
 VueUI.component('vue-tab', {
-    template :
-        '<div class="vue-tab">' +
-            '<div class="vue-tab-content"><content></content></div>' +
-            '<ul class="nav nav-tabs vue-tab-ul"></ul>' +
-            '<div class="tab-content vue-tab-div"></div>' +
-        '</div>',
+    template : '<div class="vue-tab"><content></content></div>',
     data : function (){
         return {
             config : {},
@@ -16,24 +11,28 @@ VueUI.component('vue-tab', {
         }
     },
     watch : {
+        active : function (){
+            this.setActive()
+        }
     },
     methods : {
+        setActive : function (){
+            this.$tabs.removeClass('active').eq(this.active).addClass('active')
+            this.$contents.removeClass('active').eq(this.active).addClass('active')
+        }
     },
     compiled : function (){
+        var me = this
         this.$$el = $(this.$el)
+        this.$tabs = this.$$el.find('.nav li')
+        this.$contents = this.$$el.find('.tab-pane')
 
-        var $tabs = this.$$el.find('.vue-tab-content>ul>li')
-        var $contents = this.$$el.find('.vue-tab-content>div>div')
-
-        var $tabUl = this.$$el.find('.vue-tab-ul')
-        var $tabDiv = this.$$el.find('.vue-tab-div')
-
-        $tabs.each(function (){
-            $tabUl.append($(this))
+        this.$tabs.each(function (idx){
+            $(this).on('click', function (){
+                me.active = idx
+            })
         })
 
-        $contents.each(function (){
-            $tabDiv.append($(this))
-        })
+        this.setActive()
     }
 })

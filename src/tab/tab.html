@@ -9,7 +9,7 @@
         </style>
     </head>
     <body id="tabTest">
-        <!-- <vue-tab>
+        <vue-tab v-with="config:conf" vue-id="myTab">
             <ul class="nav nav-tabs">
                 <li>
                     <a href="javascript:;">tab1</a>
@@ -28,19 +28,6 @@
                 <div class="tab-pane">content2</div>
                 <div class="tab-pane">content3</div>
             </div>
-        </vue-tab> -->
-
-        <vue-tab>
-            <ul>
-                <li><a href="javascritp:;">tab1</a></li>
-                <li><a href="javascritp:;">tab2</a></li>
-                <li><a href="javascritp:;">tab3</a></li>
-            </ul>
-            <div>
-                <div>content1<vue-table></vue-table></div>
-                <div>content2</div>
-                <div>content3</div>
-            </div>
         </vue-tab>
     </body>
 </html>
@@ -51,6 +38,9 @@
 new Vue({
     el : '#tabTest',
     data : {
+        conf : {
+            active : 1 //初始索引
+        }
     },
     methods : {
     }

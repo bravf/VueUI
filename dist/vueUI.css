@@ -134,6 +134,9 @@
     transform:scaleY(-1);
     -webkit-transform:scaleY(-1);
 }
+.vue-tab-content{
+    display: none;
+}
 .vue-table{}
 .vue-table-pager-td{
     text-align: right;
