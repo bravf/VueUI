@@ -160,6 +160,41 @@ new Vue({
 }
 ```
 
+##tab（选项卡）
+```
+//html
+<vue-tab v-with="config:conf" vue-id="myTab">
+    <ul class="nav nav-tabs">
+        <li>
+            <a href="javascript:;">tab1</a>
+        </li>
+        <li>
+            <a href="javascript:;">tab2</a>
+        </li>
+        <li>
+            <a href="javascript:;">tab3</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane">
+            <vue-table></vue-table>
+        </div>
+        <div class="tab-pane">content2</div>
+        <div class="tab-pane">content3</div>
+    </div>
+</vue-tab>
+
+//js
+new Vue({
+    el : '#tabTest',
+    data : {
+        conf : {
+            active : 1 //初始索引
+        }
+    }
+})
+```
+
 
   [1]: http://sandbox.runjs.cn/show/yamvreus
   [2]: http://sandbox.runjs.cn/show/4abmqavu
