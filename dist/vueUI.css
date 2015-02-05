@@ -1,17 +1,3 @@
-.vue-modal{
-    display: block;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-.vue-modal-backdrop{
-    position: absolute;
-}
-.vue-pager{
-    font-size: 0;
-}
-.vue-pager-pagination{
-    margin: 0;
-}
 .vue-datepicker{
     position: relative;
     display: inline-block;
@@ -84,6 +70,20 @@
     right: 2px;
 }
 
+.vue-modal{
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.vue-modal-backdrop{
+    position: absolute;
+}
+.vue-pager{
+    font-size: 0;
+}
+.vue-pager-pagination{
+    margin: 0;
+}
 .vue-select{
     position: relative;
     height: 34px;

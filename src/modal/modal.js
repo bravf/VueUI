@@ -105,15 +105,15 @@ new function (){
     var confirmVU = VueUI.getComponent('VueUIConfirm')
 
     VueUI.alert = function (conf){
-        if ($.type(conf) == 'string'){
-            alertVU.content = conf
-            alertVU.title = document.title
-            alertVU.okBtnCallback = VueUI.emptyFunc
-        }
-        else {
+        if ($.type(conf) == 'object'){
             alertVU.title = conf.title
             alertVU.content = conf.content || ''
             alertVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
+        }
+        else {
+            alertVU.content = conf
+            alertVU.title = document.title
+            alertVU.okBtnCallback = VueUI.emptyFunc
         }
         alertVU.toggle = true
     }
