@@ -14,13 +14,174 @@
     </head>
     <body id="pagerTest">
 
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <button class="btn btn-default" v-on="click:vAlert">alert</button>
         <button class="btn btn-default" v-on="click:vConfirm">confirm</button>
         <button class="btn btn-default" v-on="click:vModal">modal</button>
 
+
         <vue-modal v-with="config:conf" vue-id="logModal">
-            <h4>日志列表</h4>
-            <vue-table v-with="config:tableConf"></vue-table>
+            <!-- <h4>日志列表</h4>
+            <vue-table v-with="config:tableConf"></vue-table> -->
+
+            <style>
+            tr{
+                line-height: 50px;
+            }
+            </style>
+           <div class="pop_layer">
+            <div class="pop_con">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="pop_table">
+                    <tr>
+                        <td width="100" class="q_l">供应商名称</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">联系人</td>
+                        <td><input name="" type="text" class="q_ui_input q_ui_small"></td>
+                        <td colspan="2" align="center">联系人手机<input name="" type="text" class="q_ui_input q_ui_small"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">联系人邮箱</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">结算方式</td>
+                        <td colspan="3" class="q_r">
+                            <select name="select" id="select" class="q_ui_select">
+                                <option>汇总结算</option>
+                                <option>分账结算</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="q_l"></td>
+                        <td colspan="3" class="q_r">
+                            <div class="q_ch"><input name="" type="checkbox" value="" class="Qt_checkbox">电影票结算信息</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户银行</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户支行</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户名</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">银行账号</td>
+                        <td colspan="3" class="q_r">
+                            <input name="" type="text" class="q_ui_input">
+                            <label><input name="" type="radio" value="" checked>
+                                对私账号</label>
+                                <label><input name="" type="radio" value="">
+                                    对公账号</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">财务联系人</td>
+                        <td><input name="" type="text" class="q_ui_input q_ui_small"></td>
+                        <td colspan="2" align="right">财务联系人手机<input name="" type="text" class="q_ui_input" style="width:100px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">财务邮箱</td>
+                        <td><input name="" type="text" class="q_ui_input"></td>
+                        <td colspan="2" align="right">结算周期
+                            <select name="select" id="select" class="q_ui_select">
+                                <option>周结</option>
+                                <option>月结</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l"></td>
+                        <td colspan="3" class="q_r">
+                            <div class="q_ch"><input name="" type="checkbox" value="" class="Qt_checkbox">服务费结算信息</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户银行</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户支行</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户名</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">银行账号</td>
+                        <td colspan="3" class="q_r">
+                            <input name="" type="text" class="q_ui_input">
+                            <label><input name="" type="radio" value="" checked>
+                                对私账号</label>
+                                <label><input name="" type="radio" value="">
+                                    对公账号</label>
+                                </td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">财务联系人</td>
+                        <td><input name="" type="text" class="q_ui_input"></td>
+                        <td colspan="2" align="right">财务联系人手机<input name="" type="text" class="q_ui_input" style="width:100px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">财务邮箱</td>
+                        <td><input name="" type="text" class="q_ui_input"></td>
+                        <td colspan="2" align="right">结算周期
+                            <select name="select" id="select" class="q_ui_select">
+                                <option>周结</option>
+                                <option>月结</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户银行</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户支行</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">开户名</td>
+                        <td colspan="3" class="q_r"><input name="" type="text" class="q_ui_input q_ui_big"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">银行账号</td>
+                        <td colspan="3" class="q_r">
+                            <input name="" type="text" class="q_ui_input">
+                            <label><input name="" type="radio" value="" checked>
+                                对私账号</label>
+                                <label><input name="" type="radio" value="">
+                                    对公账号</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">财务联系人</td>
+                        <td><input name="" type="text" class="q_ui_input q_ui_small"></td>
+                        <td colspan="2" align="right">财务联系人手机<input name="" type="text" class="q_ui_input" style="width:100px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="q_l">财务邮箱</td>
+                        <td><input name="" type="text" class="q_ui_input"></td>
+                        <td colspan="2" align="right">结算周期
+                            <select name="select" id="select" class="q_ui_select">
+                                <option>周结</option>
+                                <option>月结</option>
+                            </select></td>
+                    </tr>
+                </table>
+                <div class="btn"><a href="javascript:;" class="q_ui_btn1">确定</a></div>
+            </div>
+        </div>
+
         </vue-modal>
     </body>
 </html>

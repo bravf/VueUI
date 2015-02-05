@@ -5,7 +5,7 @@
 VueUI.component('vue-modal', {
     template :
         '<div class="modal vue-modal" v-show="toggle">' +
-            '<div class="modal-backdrop fade in"></div>' +
+            '<div class="modal-backdrop fade in vue-modal-backdrop"></div>' +
             '<div class="modal-dialog" v-style="width:width+\'px\'">' +
                 '<div class="modal-content">' +
                     '<div class="modal-header">' +
@@ -49,6 +49,13 @@ VueUI.component('vue-modal', {
         },
         title : function (){
             this.title = this.title || document.title
+        },
+        toggle : function (){
+            if (this.toggle){
+                this.syncHeight()
+            }
+
+            document.body.style.overflow = this.toggle ? 'hidden' : 'auto'
         }
     },
     methods : {
@@ -59,10 +66,17 @@ VueUI.component('vue-modal', {
         okBtnClick : function (){
             this.toggle = false
             this.okBtnCallback()
+        },
+        syncHeight : function (){
+            var height = Math.max(this.$$el.find('.modal-dialog').height() + 60, document.documentElement.clientHeight)
+            this.$backdrop.height(height)
         }
     },
     compiled : function (){
         this.title = this.title || document.title
+
+        this.$$el = $(this.$el)
+        this.$backdrop = this.$$el.find('.vue-modal-backdrop')
     }
 })
 

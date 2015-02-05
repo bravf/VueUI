@@ -2,7 +2,7 @@
     Copyright (c) 2015 bravf(bravfing@126.com)
 */
 
-var VueUI = function (){
+window.VueUI = function (){
     var VueUI = {}
 
     var componentPool = {}
