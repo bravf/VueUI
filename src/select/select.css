@@ -1,6 +1,7 @@
 .vue-select{
     position: relative;
     height: 34px;
+    display: inline-block;
 }
 .vue-select-content{
     display: none;
@@ -22,12 +23,12 @@
     top: 14px;
 }
 .vue-select-options-div{
-    position: relative;
+    position: absolute;
     max-height: 270px;
     overflow: scroll;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 4px;
-    top: 2px;
+    top: 36px;
     z-index: 10000;
 }
 .vue-select-options-ul{

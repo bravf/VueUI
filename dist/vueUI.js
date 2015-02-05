@@ -703,6 +703,7 @@ VueUI.component('vue-select', {
         //设置各种宽度
         $dom.find('.vue-select').outerWidth(this.width)
         $btn.find('.vue-select-btn-text').width(this.width - 35)
+        $dom.find('.vue-select-options-div').outerWidth(this.width)
 
         //设置全局事件
         $(window).on('click', function (e){
