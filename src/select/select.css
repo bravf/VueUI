@@ -25,7 +25,8 @@
 .vue-select-options-div{
     position: absolute;
     max-height: 270px;
-    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 4px;
     top: 36px;
