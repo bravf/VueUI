@@ -660,6 +660,14 @@ VueUI.component('vue-select', {
             var marginTop = 0
             var fn = ''
 
+            //当高于maxHeight，出现滚动条
+            if (this.data.length > 10){
+                $div.css('overflow-y', 'scroll')
+            }
+            else {
+                $div.css('overflow-y', 'hidden')
+            }
+
             if ( (divH >= (pageH-selectY)) && (selectY >= divH) ){
                 marginTop = -(btnH + divH + 4)
                 scrollTop = 1e8
