@@ -10,7 +10,7 @@ VueUI.component('vue-select', {
                 '<span class="vue-select-btn-text">{{text}}</span>' +
                 '<span class="caret"></span>' +
             '</button>' +
-            '<div class="vue-select-options-div" v-style="display:display">' +
+            '<div class="vue-select-options-div" v-show="display">' +
                 '<ul class="dropdown-menu vue-select-options-ul">' +
                     '<li v-repeat="data" v-on="click:itemClick($index)" v-class="vue-select-option-curr:$index==index">' +
                         '<a href="javascript:;">{{text}}</a>' +
@@ -27,7 +27,7 @@ VueUI.component('vue-select', {
             //组件宽度
             width: 100,
             //是否显示options
-            display : 'none',
+            display : false,
             //当前值
             value : '',
             //当前文本
@@ -51,7 +51,7 @@ VueUI.component('vue-select', {
     },
     methods : {
         selectClick : function (e){
-            e.stopPropagation()
+            //e.stopPropagation()
         },
         buttonClick : function (){
             this.toggleOptions()
@@ -83,9 +83,9 @@ VueUI.component('vue-select', {
             this.text = currOption.text
         },
         toggleOptions : function (){
-            this.display = this.display == 'none' ? 'block' : 'none'
+            this.display = !this.display
 
-            if (this.display == 'none'){
+            if (!this.display){
                 return
             }
 
@@ -162,7 +162,19 @@ VueUI.component('vue-select', {
 
         //设置全局事件
         $(window).on('click', function (e){
-            me.display = 'none'
+            var dom = e.target
+
+            while (dom){
+                if (dom == me.$el){
+                    return
+                }
+                dom = dom.parentElement
+                if (dom == document.body){
+                    break
+                }
+            }
+
+            me.display = false
         })
     }
 })
