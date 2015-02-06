@@ -140,6 +140,40 @@
     transform:scaleY(-1);
     -webkit-transform:scaleY(-1);
 }
+.vue-suggest{
+    position: relative;
+    display: inline-block;
+}
+
+.vue-suggest-options-div{
+    position: absolute;
+    max-height: 270px;
+    overflow: scroll;
+    border: 1px solid rgba(0,0,0,.15);
+    top: 36px;
+    z-index: 10000;
+}
+.vue-suggest-options-ul{
+    position: static;
+    float: none;
+    display: block;
+    min-width: 0!important;
+    margin: 0;
+    border: none;
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+.vue-suggest-options-ul li:hover{
+    background: #f5f5f5;
+}
+.vue-suggest-options-ul a{
+    padding: 3px 12px!important;
+    overflow: hidden;
+    text-decoration: none;
+}
+.vue-suggest-option-curr{
+    background: #f5f5f5;
+}
 .vue-tab-content{
     display: none;
 }
