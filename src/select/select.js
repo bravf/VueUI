@@ -39,14 +39,17 @@ VueUI.component('vue-select', {
     },
     watch : {
         data : function (){
-            this.syncCurrByValue()
+            this.syncCurr()
         },
         index : function (){
             this.syncCurrByIndex()
             this.onChange(this.value, this.text, this.index)
         },
         value : function (){
-            this.syncCurrByValue()
+            this.syncCurr()
+        },
+        text : function (){
+            this.syncCurr('text')
         }
     },
     methods : {
@@ -60,15 +63,20 @@ VueUI.component('vue-select', {
             this.index = idx
             this.toggleOptions()
         },
-        syncCurrByValue : function (){
+        syncCurr : function (key){
+            if (key != 'text'){
+                key = 'value'
+            }
+
             if (!this.data.length){
                 return
             }
             for (var i=0, option; i<this.data.length; i++){
                 option = this.data[i]
-                if (option.value == this.value){
+                if (option[key] == this[key]){
                     this.index = i
                     this.text = option.text
+                    this.value = option.value
                     return
                 }
             }
@@ -145,7 +153,7 @@ VueUI.component('vue-select', {
     compiled : function (){
         var me = this
 
-        this.syncCurrByValue()
+        this.syncCurr()
 
         var $dom = $(this.$el)
         var $btn = $dom.find('.vue-select-btn')
