@@ -30,30 +30,36 @@ window.VueUI = function (){
     //处理vue-model
     function handleVueModel(){
         var me = this
-        var attr = this.$el.getAttribute('vue-model')
-        if (!attr){
-            return
-        }
 
-        var parentObj = me.$parent
-        var parentAttr = attr
+        ;[{a:'vue-model', b:'value'}, {a:'vue-model-text', b:'text'}].forEach(function (item){
+            var a = item.a
+            var b = item.b
 
-        var attrList = attr.split('.')
+            var attr = me.$el.getAttribute(a)
+            if (!attr){
+                return
+            }
 
-        if (attrList.length > 1){
-            attrList.slice(0, -1).forEach(function (k){
-                parentObj = parentObj[k]
+            var parentObj = me.$parent
+            var parentAttr = attr
+
+            var attrList = attr.split('.')
+
+            if (attrList.length > 1){
+                attrList.slice(0, -1).forEach(function (k){
+                    parentObj = parentObj[k]
+                })
+                parentAttr = attrList.slice(-1)[0]
+            }
+
+            me[b] = parentObj[parentAttr]
+
+            me.$parent.$watch(attr, function (){
+                me[b] = parentObj[parentAttr]
             })
-            parentAttr = attrList.slice(-1)[0]
-        }
-
-        this.value = parentObj[parentAttr]
-
-        me.$parent.$watch(attr, function (){
-            me.value = parentObj[parentAttr]
-        })
-        this.$watch('value', function (){
-            parentObj[parentAttr] = this.value
+            me.$watch(b, function (){
+                parentObj[parentAttr] = me[b]
+            })
         })
     }
 
@@ -84,6 +90,134 @@ window.VueUI = function (){
 
     return VueUI
 
+}()
+/*
+    Copyright (c) 2015 bravf(bravfing@126.com)
+*/
+
+VueUI.component('vue-modal', {
+    template :
+        '<div class="modal vue-modal" v-show="toggle">' +
+            '<div class="modal-backdrop fade in vue-modal-backdrop"></div>' +
+            '<div class="modal-dialog" v-style="width:width+\'px\'">' +
+                '<div class="modal-content">' +
+                    '<div class="modal-header">' +
+                        '<button type="button" class="close" v-on="click:toggle=false"><span aria-hidden="true">×</span></button>' +
+                        '<h4 class="modal-title">{{title}}</h4>' +
+                    '</div>' +
+                    '<div class="modal-body">' +
+                        '{{{content}}}' +
+                        '<content></content>' +
+                    '</div>' +
+                    '<div class="modal-footer" v-show="isShowCancelBtn || isShowOkBtn">' +
+                        '<button type="button" class="btn btn-default" v-on="click:cancelBtnClick" v-show="isShowCancelBtn">{{cancelBtnText}}</button>' +
+                        '<button type="button" class="btn btn-primary" v-on="click:okBtnClick" v-show="isShowOkBtn">{{okBtnText}}</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>'
+    ,
+    data : function (){
+        return {
+            config : {},
+
+            title : '', //标题
+            content : '', //内容
+            toggle : false, //是否显示
+            width : 500, //宽度
+
+            // 按钮相关
+            isShowCancelBtn : false,
+            cancelBtnText : '取消',
+            cancelBtnCallback : VueUI.emptyFunc,
+
+            isShowOkBtn : false,
+            okBtnText : '确认',
+            okBtnCallback : VueUI.emptyFunc,
+        }
+    },
+    watch : {
+        content : function (){
+            this.$compile(this.$el.querySelector('.modal-body'))
+        },
+        title : function (){
+            this.title = this.title || document.title
+        },
+        toggle : function (){
+            if (this.toggle){
+                this.syncHeight()
+            }
+
+            document.body.style.overflow = this.toggle ? 'hidden' : 'auto'
+        }
+    },
+    methods : {
+        cancelBtnClick : function (){
+            this.toggle = false
+            this.cancelBtnCallback()
+        },
+        okBtnClick : function (){
+            this.toggle = false
+            this.okBtnCallback()
+        },
+        syncHeight : function (){
+            var height = Math.max(this.$$el.find('.modal-dialog').height() + 60, document.documentElement.clientHeight)
+            this.$backdrop.height(height)
+        }
+    },
+    compiled : function (){
+        this.title = this.title || document.title
+
+        this.$$el = $(this.$el)
+        this.$backdrop = this.$$el.find('.vue-modal-backdrop')
+    }
+})
+
+new function (){
+    var str =
+    '<div id="VueUIAlertConfirm">' +
+        '<vue-modal vue-id="VueUIAlert" v-with="config:VueUIAlertConf"></vue-modal>' +
+        '<vue-modal vue-id="VueUIConfirm" v-with="config:VueUIConfirmConf"></vue-modal>' +
+    '</div>'
+    $('body').append(str)
+
+    new Vue({
+        el : '#VueUIAlertConfirm',
+        data : {
+            VueUIAlertConf : {
+                isShowOkBtn : true
+            },
+            VueUIConfirmConf : {
+                isShowOkBtn : true,
+                isShowCancelBtn : true
+            }
+        }
+    })
+
+    var alertVU = VueUI.getComponent('VueUIAlert')
+    var confirmVU = VueUI.getComponent('VueUIConfirm')
+
+    VueUI.alert = function (conf){
+        if ($.type(conf) == 'object'){
+            alertVU.title = conf.title
+            alertVU.content = conf.content || ''
+            alertVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
+        }
+        else {
+            alertVU.content = conf
+            alertVU.title = document.title
+            alertVU.okBtnCallback = VueUI.emptyFunc
+        }
+        alertVU.toggle = true
+    }
+
+    VueUI.confirm = function (conf){
+        confirmVU.title = conf.title
+        confirmVU.content = conf.content || '',
+        confirmVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
+        confirmVU.cancelBtnCallback = conf.cancelCallback || VueUI.emptyFunc
+        confirmVU.toggle = true
+    }
 }()
 /*
     Copyright (c) 2015 bravf(bravfing@126.com)
@@ -299,134 +433,6 @@ VueUI.component('vue-datepicker', {
     Copyright (c) 2015 bravf(bravfing@126.com)
 */
 
-VueUI.component('vue-modal', {
-    template :
-        '<div class="modal vue-modal" v-show="toggle">' +
-            '<div class="modal-backdrop fade in vue-modal-backdrop"></div>' +
-            '<div class="modal-dialog" v-style="width:width+\'px\'">' +
-                '<div class="modal-content">' +
-                    '<div class="modal-header">' +
-                        '<button type="button" class="close" v-on="click:toggle=false"><span aria-hidden="true">×</span></button>' +
-                        '<h4 class="modal-title">{{title}}</h4>' +
-                    '</div>' +
-                    '<div class="modal-body">' +
-                        '{{{content}}}' +
-                        '<content></content>' +
-                    '</div>' +
-                    '<div class="modal-footer" v-show="isShowCancelBtn || isShowOkBtn">' +
-                        '<button type="button" class="btn btn-default" v-on="click:cancelBtnClick" v-show="isShowCancelBtn">{{cancelBtnText}}</button>' +
-                        '<button type="button" class="btn btn-primary" v-on="click:okBtnClick" v-show="isShowOkBtn">{{okBtnText}}</button>' +
-                    '</div>' +
-                '</div>' +
-            '</div>' +
-        '</div>'
-    ,
-    data : function (){
-        return {
-            config : {},
-
-            title : '', //标题
-            content : '', //内容
-            toggle : false, //是否显示
-            width : 500, //宽度
-
-            // 按钮相关
-            isShowCancelBtn : false,
-            cancelBtnText : '取消',
-            cancelBtnCallback : VueUI.emptyFunc,
-
-            isShowOkBtn : false,
-            okBtnText : '确认',
-            okBtnCallback : VueUI.emptyFunc,
-        }
-    },
-    watch : {
-        content : function (){
-            this.$compile(this.$el.querySelector('.modal-body'))
-        },
-        title : function (){
-            this.title = this.title || document.title
-        },
-        toggle : function (){
-            if (this.toggle){
-                this.syncHeight()
-            }
-
-            document.body.style.overflow = this.toggle ? 'hidden' : 'auto'
-        }
-    },
-    methods : {
-        cancelBtnClick : function (){
-            this.toggle = false
-            this.cancelBtnCallback()
-        },
-        okBtnClick : function (){
-            this.toggle = false
-            this.okBtnCallback()
-        },
-        syncHeight : function (){
-            var height = Math.max(this.$$el.find('.modal-dialog').height() + 60, document.documentElement.clientHeight)
-            this.$backdrop.height(height)
-        }
-    },
-    compiled : function (){
-        this.title = this.title || document.title
-
-        this.$$el = $(this.$el)
-        this.$backdrop = this.$$el.find('.vue-modal-backdrop')
-    }
-})
-
-new function (){
-    var str =
-    '<div id="VueUIAlertConfirm">' +
-        '<vue-modal vue-id="VueUIAlert" v-with="config:VueUIAlertConf"></vue-modal>' +
-        '<vue-modal vue-id="VueUIConfirm" v-with="config:VueUIConfirmConf"></vue-modal>' +
-    '</div>'
-    $('body').append(str)
-
-    new Vue({
-        el : '#VueUIAlertConfirm',
-        data : {
-            VueUIAlertConf : {
-                isShowOkBtn : true
-            },
-            VueUIConfirmConf : {
-                isShowOkBtn : true,
-                isShowCancelBtn : true
-            }
-        }
-    })
-
-    var alertVU = VueUI.getComponent('VueUIAlert')
-    var confirmVU = VueUI.getComponent('VueUIConfirm')
-
-    VueUI.alert = function (conf){
-        if ($.type(conf) == 'object'){
-            alertVU.title = conf.title
-            alertVU.content = conf.content || ''
-            alertVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
-        }
-        else {
-            alertVU.content = conf
-            alertVU.title = document.title
-            alertVU.okBtnCallback = VueUI.emptyFunc
-        }
-        alertVU.toggle = true
-    }
-
-    VueUI.confirm = function (conf){
-        confirmVU.title = conf.title
-        confirmVU.content = conf.content || '',
-        confirmVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
-        confirmVU.cancelBtnCallback = conf.cancelCallback || VueUI.emptyFunc
-        confirmVU.toggle = true
-    }
-}()
-/*
-    Copyright (c) 2015 bravf(bravfing@126.com)
-*/
-
 VueUI.component('vue-pager', {
     template :
     '<div class="vue-pager">' +
@@ -549,7 +555,7 @@ VueUI.component('vue-pager', {
 
 VueUI.component('vue-select', {
     template :
-        '<div class="vue-select" v-on="click:selectClick">' +
+        '<div class="vue-select">' +
             '<div class="vue-select-content"><content></content></div>' +
             '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
                 '<span class="vue-select-btn-text">{{text}}</span>' +
@@ -598,9 +604,6 @@ VueUI.component('vue-select', {
         }
     },
     methods : {
-        selectClick : function (e){
-            //e.stopPropagation()
-        },
         buttonClick : function (){
             this.toggleOptions()
         },
@@ -609,13 +612,18 @@ VueUI.component('vue-select', {
             this.toggleOptions()
         },
         syncCurr : function (key){
-            if (key != 'text'){
-                key = 'value'
-            }
-
             if (!this.data.length){
                 return
             }
+
+            key = (key=='text') ? 'text' : 'value'
+
+            if (key == 'value'){
+                if (this.value=='' && this.text!=''){
+                    key = 'text'
+                }
+            }
+
             for (var i=0, option; i<this.data.length; i++){
                 option = this.data[i]
                 if (option[key] == this[key]){
