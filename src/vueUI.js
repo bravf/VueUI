@@ -30,30 +30,36 @@ window.VueUI = function (){
     //处理vue-model
     function handleVueModel(){
         var me = this
-        var attr = this.$el.getAttribute('vue-model')
-        if (!attr){
-            return
-        }
 
-        var parentObj = me.$parent
-        var parentAttr = attr
+        ;[{a:'vue-model', b:'value'}, {a:'vue-model-text', b:'text'}].forEach(function (item){
+            var a = item.a
+            var b = item.b
 
-        var attrList = attr.split('.')
+            var attr = me.$el.getAttribute(a)
+            if (!attr){
+                return
+            }
 
-        if (attrList.length > 1){
-            attrList.slice(0, -1).forEach(function (k){
-                parentObj = parentObj[k]
+            var parentObj = me.$parent
+            var parentAttr = attr
+
+            var attrList = attr.split('.')
+
+            if (attrList.length > 1){
+                attrList.slice(0, -1).forEach(function (k){
+                    parentObj = parentObj[k]
+                })
+                parentAttr = attrList.slice(-1)[0]
+            }
+
+            me[b] = parentObj[parentAttr]
+
+            me.$parent.$watch(attr, function (){
+                me[b] = parentObj[parentAttr]
             })
-            parentAttr = attrList.slice(-1)[0]
-        }
-
-        this.value = parentObj[parentAttr]
-
-        me.$parent.$watch(attr, function (){
-            me.value = parentObj[parentAttr]
-        })
-        this.$watch('value', function (){
-            parentObj[parentAttr] = this.value
+            me.$watch(b, function (){
+                parentObj[parentAttr] = me[b]
+            })
         })
     }
 
