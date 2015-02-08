@@ -9,7 +9,7 @@ window.VueUI = function (){
     var comCounter = 1
 
     function getComId(){
-        return (new Date).getTime()/1000 + '_' + comCounter
+        return (new Date).getTime() + '_' + comCounter
     }
 
     //将外部传进来的参数mix到data
@@ -84,7 +84,7 @@ window.VueUI = function (){
         Vue.component(key, options)
     }
 
-    VueUI.getComponent = function (id){
+    VueUI.getComponent = VueUI.$ = function (id){
         return componentPool[id]
     }
 
