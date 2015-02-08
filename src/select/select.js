@@ -4,7 +4,7 @@
 
 VueUI.component('vue-select', {
     template :
-        '<div class="vue-select" v-on="click:selectClick">' +
+        '<div class="vue-select">' +
             '<div class="vue-select-content"><content></content></div>' +
             '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
                 '<span class="vue-select-btn-text">{{text}}</span>' +
@@ -53,9 +53,6 @@ VueUI.component('vue-select', {
         }
     },
     methods : {
-        selectClick : function (e){
-            //e.stopPropagation()
-        },
         buttonClick : function (){
             this.toggleOptions()
         },
@@ -64,13 +61,18 @@ VueUI.component('vue-select', {
             this.toggleOptions()
         },
         syncCurr : function (key){
-            if (key != 'text'){
-                key = 'value'
-            }
-
             if (!this.data.length){
                 return
             }
+
+            key = (key=='text') ? 'text' : 'value'
+
+            if (key == 'value'){
+                if (this.value=='' && this.text!=''){
+                    key = 'text'
+                }
+            }
+
             for (var i=0, option; i<this.data.length; i++){
                 option = this.data[i]
                 if (option[key] == this[key]){

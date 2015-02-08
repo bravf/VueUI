@@ -9,32 +9,18 @@
         </style>
     </head>
     <body id="selectTest">
-        <div style="padding-top:100px;padding-left:50px;">
-            <vue-select v-with="config:selectConf" vue-model="step1.selectValue" vue-id="mySelect">
-               <!--  <option value="1">江苏省南通市1</option>
+        <div style="padding-top:200px;padding-left:50px;">
+            <vue-select
+                v-with="config:conf"
+                vue-model="step1.selectValue"
+                vue-model-text="step1.selectText"
+                vue-id="mySelect">
+                <!-- <option value="1">江苏省南通市1</option>
                 <option value="2">江苏省南通市2</option>
                 <option value="3">江苏省南通市3</option>
                 <option value="4">江苏省南通市4</option>
                 <option value="5">江苏省南通市5</option> -->
-            </vue-select><br><br><br>
-            <vue-select v-with="config:selectConf" vue-model="step1.selectValue" vue-id="mySelect"></vue-select>
-            {{step1.selectValue}}
-        </div>
-
-<!--         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <div style="margin-bottom:200px"></div>
-
-        <div class="btn-group">
-            <button class="btn btn-default" v-on="click:print">打印当前select值（在console里）</button>
-        </div>
-
-        <div style="padding:20px;">
-            <vue-select v-with="config:selectConf" v-ref="mySelect2"></vue-select>
-        </div>
-
-        <div class="btn-group">
-            <button class="btn btn-default" v-on="click:print">打印当前select值（在console里）</button>
-        </div> -->
+            </vue-select>
 
     </body>
 </html>
@@ -42,45 +28,33 @@
 <script src="../../lib/vue.js"></script>
 <script src="../../dist/vueUI.js"></script>
 <script>
-
-var selectConf = {
-    data : [],
-    width : 130,
-    onChange : function (value){
-        //console.log(value)
+x = new Vue({
+    el : '#selectTest',
+    data : {
+        conf : {
+            width : 200,
+            data : []
+        },
+        step1 : {
+            selectValue : '',
+            selectText : '江苏省南通市3'
+        }
+    },
+    methods : {
     }
-}
+})
 
-function setOptions(n){
-    for (var i=1; i<n; i++){
-        selectConf.data.push({
-            value : i,
-            text : '江苏省南通市' + i
+function getData() {
+    for (var i=1; i<10; i++){
+        x.conf.data.push({
+            value:i,
+            text:'江苏省南通市' + i
         })
     }
 }
 
- setOptions(100)
-// setTimeout(function (){
-//     setOptions(100)
-// }, 400)
+setTimeout(function (){
+    getData()
+}, 3000)
 
-x = new Vue({
-    el : '#selectTest',
-    data : {
-        selectConf : selectConf,
-        selectValue : 3,
-        step1 : {
-            selectValue : 3
-        }
-    },
-    methods : {
-        print : function (){
-            var vc_myselect = VueUI.getComponent('mySelect')
-            console.log(vc_myselect.value)
-            console.log(vc_myselect.text)
-            console.log(vc_myselect.index)
-        }
-    }
-})
 </script>
