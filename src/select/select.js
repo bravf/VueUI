@@ -62,9 +62,10 @@ VueUI.component('vue-select', {
         },
         syncCurr : function (key){
             if (!this.data.length){
-                this.value = this.text = ''
                 return
             }
+
+            var _key = key
 
             key = (key=='text') ? 'text' : 'value'
 
@@ -83,7 +84,10 @@ VueUI.component('vue-select', {
                     return
                 }
             }
-            this.syncCurrByIndex()
+
+            if ( (_key == 'data') && (this.text == '') && (this.value == '') ){
+                this.syncCurrByIndex()
+            }
         },
         syncCurrByIndex : function (){
             var currOption = this.data[this.index]
