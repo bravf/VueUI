@@ -305,452 +305,6 @@ VueUI.component('vue-datepicker', {
     Copyright (c) 2015 bravf(bravfing@126.com)
 */
 
-VueUI.component('vue-modal', {
-    template :
-        '<div class="modal vue-modal" v-show="toggle">' +
-            '<div class="modal-backdrop fade in vue-modal-backdrop"></div>' +
-            '<div class="modal-dialog" v-style="width:width+\'px\'">' +
-                '<div class="modal-content">' +
-                    '<div class="modal-header">' +
-                        '<button type="button" class="close" v-on="click:toggle=false"><span aria-hidden="true">×</span></button>' +
-                        '<h4 class="modal-title">{{title}}</h4>' +
-                    '</div>' +
-                    '<div class="modal-body">' +
-                        '{{{content}}}' +
-                        '<content></content>' +
-                    '</div>' +
-                    '<div class="modal-footer" v-show="isShowCancelBtn || isShowOkBtn">' +
-                        '<button type="button" class="btn btn-default" v-on="click:cancelBtnClick" v-show="isShowCancelBtn">{{cancelBtnText}}</button>' +
-                        '<button type="button" class="btn btn-primary" v-on="click:okBtnClick" v-show="isShowOkBtn">{{okBtnText}}</button>' +
-                    '</div>' +
-                '</div>' +
-            '</div>' +
-        '</div>'
-    ,
-    data : function (){
-        return {
-            config : {},
-
-            title : '', //标题
-            content : '', //内容
-            toggle : false, //是否显示
-            width : 500, //宽度
-
-            // 按钮相关
-            isShowCancelBtn : false,
-            cancelBtnText : '取消',
-            cancelBtnCallback : VueUI.emptyFunc,
-
-            isShowOkBtn : false,
-            okBtnText : '确认',
-            okBtnCallback : VueUI.emptyFunc,
-        }
-    },
-    watch : {
-        content : function (){
-            this.$compile(this.$el.querySelector('.modal-body'))
-        },
-        title : function (){
-            this.title = this.title || document.title
-        },
-        toggle : function (){
-            if (this.toggle){
-                this.syncHeight()
-            }
-
-            document.body.style.overflow = this.toggle ? 'hidden' : 'auto'
-        }
-    },
-    methods : {
-        cancelBtnClick : function (){
-            this.toggle = false
-            this.cancelBtnCallback()
-        },
-        okBtnClick : function (){
-            this.toggle = false
-            this.okBtnCallback()
-        },
-        syncHeight : function (){
-            var height = Math.max(this.$$el.find('.modal-dialog').height() + 60, document.documentElement.clientHeight)
-            this.$backdrop.height(height)
-        }
-    },
-    compiled : function (){
-        this.title = this.title || document.title
-
-        this.$$el = $(this.$el)
-        this.$backdrop = this.$$el.find('.vue-modal-backdrop')
-    }
-})
-
-new function (){
-    var str =
-    '<div id="VueUIAlertConfirm">' +
-        '<vue-modal vue-id="VueUIAlert" v-with="config:VueUIAlertConf"></vue-modal>' +
-        '<vue-modal vue-id="VueUIConfirm" v-with="config:VueUIConfirmConf"></vue-modal>' +
-    '</div>'
-    $('body').append(str)
-
-    new Vue({
-        el : '#VueUIAlertConfirm',
-        data : {
-            VueUIAlertConf : {
-                isShowOkBtn : true
-            },
-            VueUIConfirmConf : {
-                isShowOkBtn : true,
-                isShowCancelBtn : true
-            }
-        }
-    })
-
-    var alertVU = VueUI.getComponent('VueUIAlert')
-    var confirmVU = VueUI.getComponent('VueUIConfirm')
-
-    VueUI.alert = function (conf){
-        if ($.type(conf) == 'object'){
-            alertVU.title = conf.title
-            alertVU.content = conf.content || ''
-            alertVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
-        }
-        else {
-            alertVU.content = conf
-            alertVU.title = document.title
-            alertVU.okBtnCallback = VueUI.emptyFunc
-        }
-        alertVU.toggle = true
-    }
-
-    VueUI.confirm = function (conf){
-        confirmVU.title = conf.title
-        confirmVU.content = conf.content || '',
-        confirmVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
-        confirmVU.cancelBtnCallback = conf.cancelCallback || VueUI.emptyFunc
-        confirmVU.toggle = true
-    }
-}()
-/*
-    Copyright (c) 2015 bravf(bravfing@126.com)
-*/
-
-VueUI.component('vue-pager', {
-    template :
-    '<div class="vue-pager">' +
-        '<ul class="pagination pagination-sm vue-pager-pagination">' +
-            '<li v-repeat="pageRange" v-on="click:pageClick(num)" v-class="className">' +
-                '<a href="javascript:;">{{text}}</a>' +
-            '</li>' +
-        '</ul>' +
-    '</div>',
-    data : function (){
-        return {
-            pageRange : [],
-            totalPage : 0,
-            currPage : 1,
-            prevShow : 3,
-            nextShow : 3,
-            onChange : VueUI.emptyFunc,
-            config : {}
-        }
-    },
-    watch : {
-        totalPage : function (){
-            this.getPageRange()
-        },
-        currPage : function (){
-            this.getPageRange()
-            this.onChange(this.currPage)
-        },
-        prevShow : function (){
-            this.getPageRange()
-        },
-        nextShow : function (){
-            this.getPageRange()
-        }
-    },
-    methods : {
-        getPageRange : function (){
-            var start = 0
-            var end = 0
-            var showLen = this.prevShow + this.nextShow + 1
-            var totalPage = Math.max(this.totalPage, 1)
-            var currPage = this.currPage
-
-            if (totalPage <= 1){
-                start = end = 1
-            }
-            else if (totalPage <= showLen){
-                start = 1
-                end = totalPage
-            }
-            else {
-                if (currPage <= this.prevShow + 1){
-                    start = 1
-                    end = showLen
-                }
-                else if (currPage >= totalPage - this.nextShow){
-                    end = totalPage
-                    start = totalPage - showLen + 1
-                }
-                else {
-                    start = currPage - this.prevShow
-                    end = currPage + this.nextShow
-                }
-            }
-
-            this.pageRange = []
-
-            //上一页
-            if (currPage != 1){
-                this.pageRange.push({num:currPage-1, text:'«'})
-            }
-            //第一页
-            if (start >= 2){
-                this.pageRange.push({num:1, text:1})
-            }
-            //省略好
-            if (start > 2){
-                this.pageRange.push({text:'..'})
-            }
-            //显示的页码列表
-            for (var i=start; i<=end; i++){
-                this.pageRange.push({
-                    num : i,
-                    text : i,
-                    className : (i==currPage) ? 'active' : ''
-                })
-            }
-            //省略号
-            if (end < totalPage-1){
-                this.pageRange.push({text:'..'})
-            }
-            //最后一页
-            if (end <= totalPage-1){
-                this.pageRange.push({num:totalPage, text:totalPage})
-            }
-            //下一页
-            if (currPage != totalPage){
-                this.pageRange.push({num:currPage+1, text:'»'})
-            }
-        },
-        pageClick : function (i){
-            if (!i){
-                return false
-            }
-            if (i == this.currPage){
-                return false
-            }
-
-            this.currPage = i
-            this.getPageRange()
-        }
-    },
-    compiled : function (){
-        this.getPageRange()
-    }
-})
-/*
-    Copyright (c) 2015 bravf(bravfing@126.com)
-*/
-
-VueUI.component('vue-select', {
-    template :
-        '<div class="vue-select">' +
-            '<div class="vue-select-content"><content></content></div>' +
-            '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
-                '<span class="vue-select-btn-text">{{text}}</span>' +
-                '<span class="caret"></span>' +
-            '</button>' +
-            '<div class="vue-select-options-div" v-show="display">' +
-                '<ul class="dropdown-menu vue-select-options-ul">' +
-                    '<li v-repeat="data" v-on="click:itemClick($index)" v-class="vue-select-option-curr:$index==index">' +
-                        '<a href="javascript:;">{{text}}</a>' +
-                    '</li>' +
-                '</ul>' +
-            '</div>' +
-        '</div>'
-    ,
-    data : function (){
-        return {
-            config : {},
-            //数据
-            data : [],
-            //组件宽度
-            width: 100,
-            //是否显示options
-            display : false,
-            //当前值
-            value : '',
-            //当前文本
-            text : '',
-            //当前索引
-            index : 0,
-            onChange : VueUI.emptyFunc
-        }
-    },
-    watch : {
-        data : function (){
-            this.syncCurr()
-        },
-        index : function (){
-            this.syncCurrByIndex()
-            this.onChange(this.value, this.text, this.index)
-        },
-        value : function (){
-            this.syncCurr()
-        },
-        text : function (){
-            this.syncCurr('text')
-        }
-    },
-    methods : {
-        buttonClick : function (){
-            this.toggleOptions()
-        },
-        itemClick : function (idx){
-            this.index = idx
-            this.toggleOptions()
-        },
-        syncCurr : function (key){
-            if (!this.data.length){
-                return
-            }
-
-            key = (key=='text') ? 'text' : 'value'
-
-            if (key == 'value'){
-                if (this.value=='' && this.text!=''){
-                    key = 'text'
-                }
-            }
-
-            for (var i=0, option; i<this.data.length; i++){
-                option = this.data[i]
-                if (option[key] == this[key]){
-                    this.index = i
-                    this.text = option.text
-                    this.value = option.value
-                    return
-                }
-            }
-            this.syncCurrByIndex()
-        },
-        syncCurrByIndex : function (){
-            var currOption = this.data[this.index]
-            if (!currOption){
-                return
-            }
-            this.value = currOption.value
-            this.text = currOption.text
-        },
-        toggleOptions : function (){
-            this.display = !this.display
-
-            if (!this.display){
-                return
-            }
-
-            var $select = $(this.$el)
-            var $div = $select.find('.vue-select-options-div')
-            var $btn = $select.find('.vue-select-btn')
-            var $ul = $select.find('ul')
-
-            //设置li文本宽度
-            var optionTxtWidth = this.width - 36
-            $ul.find('a').width(optionTxtWidth)
-
-            //判断option向上弹出还是向下
-            //得到页面总高度
-            var pageH = Math.max(
-                document.documentElement.scrollHeight,
-                document.documentElement.clientHeight
-            )
-            //得到组件y轴位置
-            var selectY = $select.offset().top
-            //得到容器高度
-            var divH = $div.outerHeight()
-            //得到btn的高度
-            var btnH = $btn.outerHeight()
-
-            var scrollTop = 0
-            var marginTop = 0
-            var fn = ''
-
-            //当高于maxHeight，出现滚动条
-            if (this.data.length > 10){
-                $div.css('overflow-y', 'scroll')
-            }
-            else {
-                $div.css('overflow-y', 'hidden')
-            }
-
-            if ( (divH >= (pageH-selectY)) && (selectY >= divH) ){
-                marginTop = -(btnH + divH + 4)
-                scrollTop = 1e8
-                fn = 'addClass'
-            }
-            else {
-                marginTop = 0
-                scrollTop = 0
-                fn = 'removeClass'
-            }
-
-            $div.css('margin-top', marginTop)
-            $ul[fn]('vue-select-options-ul-scaleY')
-
-            Vue.nextTick(function (){
-                $div.scrollTop(scrollTop)
-            })
-        }
-    },
-    compiled : function (){
-        var me = this
-
-        this.syncCurr()
-
-        var $dom = $(this.$el)
-        var $btn = $dom.find('.vue-select-btn')
-
-        //检查是否有硬编码的option
-        var $options = $dom.find('option')
-        if ($options.length > 0){
-            this.data = []
-
-            $options.each(function (){
-                me.data.push({
-                    value : this.value,
-                    text : this.text
-                })
-            })
-        }
-
-        //设置各种宽度
-        $dom.find('.vue-select').outerWidth(this.width)
-        $btn.find('.vue-select-btn-text').width(this.width - 35)
-        $dom.find('.vue-select-options-div').outerWidth(this.width)
-
-        //设置全局事件
-        $(window).on('click', function (e){
-            var dom = e.target
-
-            while (dom){
-                if (dom == me.$el){
-                    return
-                }
-                dom = dom.parentElement
-                if (dom == document.body){
-                    break
-                }
-            }
-
-            me.display = false
-        })
-    }
-})
-/*
-    Copyright (c) 2015 bravf(bravfing@126.com)
-*/
-
 VueUI.component('vue-suggest', {
     template :
         '<div class="vue-suggest">' +
@@ -1116,3 +670,450 @@ VueUI.component('vue-table', {
         }
     }
 })
+/*
+    Copyright (c) 2015 bravf(bravfing@126.com)
+*/
+
+VueUI.component('vue-pager', {
+    template :
+    '<div class="vue-pager">' +
+        '<ul class="pagination pagination-sm vue-pager-pagination">' +
+            '<li v-repeat="pageRange" v-on="click:pageClick(num)" v-class="className">' +
+                '<a href="javascript:;">{{text}}</a>' +
+            '</li>' +
+        '</ul>' +
+    '</div>',
+    data : function (){
+        return {
+            pageRange : [],
+            totalPage : 0,
+            currPage : 1,
+            prevShow : 3,
+            nextShow : 3,
+            onChange : VueUI.emptyFunc,
+            config : {}
+        }
+    },
+    watch : {
+        totalPage : function (){
+            this.getPageRange()
+        },
+        currPage : function (){
+            this.getPageRange()
+            this.onChange(this.currPage)
+        },
+        prevShow : function (){
+            this.getPageRange()
+        },
+        nextShow : function (){
+            this.getPageRange()
+        }
+    },
+    methods : {
+        getPageRange : function (){
+            var start = 0
+            var end = 0
+            var showLen = this.prevShow + this.nextShow + 1
+            var totalPage = Math.max(this.totalPage, 1)
+            var currPage = this.currPage
+
+            if (totalPage <= 1){
+                start = end = 1
+            }
+            else if (totalPage <= showLen){
+                start = 1
+                end = totalPage
+            }
+            else {
+                if (currPage <= this.prevShow + 1){
+                    start = 1
+                    end = showLen
+                }
+                else if (currPage >= totalPage - this.nextShow){
+                    end = totalPage
+                    start = totalPage - showLen + 1
+                }
+                else {
+                    start = currPage - this.prevShow
+                    end = currPage + this.nextShow
+                }
+            }
+
+            this.pageRange = []
+
+            //上一页
+            if (currPage != 1){
+                this.pageRange.push({num:currPage-1, text:'«'})
+            }
+            //第一页
+            if (start >= 2){
+                this.pageRange.push({num:1, text:1})
+            }
+            //省略好
+            if (start > 2){
+                this.pageRange.push({text:'..'})
+            }
+            //显示的页码列表
+            for (var i=start; i<=end; i++){
+                this.pageRange.push({
+                    num : i,
+                    text : i,
+                    className : (i==currPage) ? 'active' : ''
+                })
+            }
+            //省略号
+            if (end < totalPage-1){
+                this.pageRange.push({text:'..'})
+            }
+            //最后一页
+            if (end <= totalPage-1){
+                this.pageRange.push({num:totalPage, text:totalPage})
+            }
+            //下一页
+            if (currPage != totalPage){
+                this.pageRange.push({num:currPage+1, text:'»'})
+            }
+        },
+        pageClick : function (i){
+            if (!i){
+                return false
+            }
+            if (i == this.currPage){
+                return false
+            }
+
+            this.currPage = i
+            this.getPageRange()
+        }
+    },
+    compiled : function (){
+        this.getPageRange()
+    }
+})
+/*
+    Copyright (c) 2015 bravf(bravfing@126.com)
+*/
+
+VueUI.component('vue-select', {
+    template :
+        '<div class="vue-select">' +
+            '<div class="vue-select-content"><content></content></div>' +
+            '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
+                '<span class="vue-select-btn-text">{{text}}</span>' +
+                '<span class="caret"></span>' +
+            '</button>' +
+            '<div class="vue-select-options-div" v-show="display">' +
+                '<ul class="dropdown-menu vue-select-options-ul">' +
+                    '<li v-repeat="data" v-on="click:itemClick($index)" v-class="vue-select-option-curr:$index==index">' +
+                        '<a href="javascript:;">{{text}}</a>' +
+                    '</li>' +
+                '</ul>' +
+            '</div>' +
+        '</div>'
+    ,
+    data : function (){
+        return {
+            config : {},
+            //数据
+            data : [],
+            //组件宽度
+            width: 100,
+            //是否显示options
+            display : false,
+            //当前值
+            value : '',
+            //当前文本
+            text : '',
+            //当前索引
+            index : 0,
+            onChange : VueUI.emptyFunc
+        }
+    },
+    watch : {
+        data : function (){
+            this.syncCurr()
+        },
+        index : function (){
+            this.syncCurrByIndex()
+            this.onChange(this.value, this.text, this.index)
+        },
+        value : function (){
+            this.syncCurr()
+        },
+        text : function (){
+            this.syncCurr('text')
+        }
+    },
+    methods : {
+        buttonClick : function (){
+            this.toggleOptions()
+        },
+        itemClick : function (idx){
+            this.index = idx
+            this.toggleOptions()
+        },
+        syncCurr : function (key){
+            if (!this.data.length){
+                this.value = this.text = ''
+                return
+            }
+
+            key = (key=='text') ? 'text' : 'value'
+
+            if (key == 'value'){
+                if (this.value=='' && this.text!=''){
+                    key = 'text'
+                }
+            }
+
+            for (var i=0, option; i<this.data.length; i++){
+                option = this.data[i]
+                if (option[key] == this[key]){
+                    this.index = i
+                    this.text = option.text
+                    this.value = option.value
+                    return
+                }
+            }
+            this.syncCurrByIndex()
+        },
+        syncCurrByIndex : function (){
+            var currOption = this.data[this.index]
+            if (!currOption){
+                return
+            }
+            this.value = currOption.value
+            this.text = currOption.text
+        },
+        toggleOptions : function (){
+            this.display = !this.display
+
+            if (!this.display){
+                return
+            }
+
+            var $select = $(this.$el)
+            var $div = $select.find('.vue-select-options-div')
+            var $btn = $select.find('.vue-select-btn')
+            var $ul = $select.find('ul')
+
+            //设置li文本宽度
+            var optionTxtWidth = this.width - 36
+            $ul.find('a').width(optionTxtWidth)
+
+            //判断option向上弹出还是向下
+            //得到页面总高度
+            var pageH = Math.max(
+                document.documentElement.scrollHeight,
+                document.documentElement.clientHeight
+            )
+            //得到组件y轴位置
+            var selectY = $select.offset().top
+            //得到容器高度
+            var divH = $div.outerHeight()
+            //得到btn的高度
+            var btnH = $btn.outerHeight()
+
+            var scrollTop = 0
+            var marginTop = 0
+            var fn = ''
+
+            //当高于maxHeight，出现滚动条
+            if (this.data.length > 10){
+                $div.css('overflow-y', 'scroll')
+            }
+            else {
+                $div.css('overflow-y', 'hidden')
+            }
+
+            if ( (divH >= (pageH-selectY)) && (selectY >= divH) ){
+                marginTop = -(btnH + divH + 4)
+                scrollTop = 1e8
+                fn = 'addClass'
+            }
+            else {
+                marginTop = 0
+                scrollTop = 0
+                fn = 'removeClass'
+            }
+
+            $div.css('margin-top', marginTop)
+            $ul[fn]('vue-select-options-ul-scaleY')
+
+            Vue.nextTick(function (){
+                $div.scrollTop(scrollTop)
+            })
+        }
+    },
+    compiled : function (){
+        var me = this
+
+        this.syncCurr()
+
+        var $dom = $(this.$el)
+        var $btn = $dom.find('.vue-select-btn')
+
+        //检查是否有硬编码的option
+        var $options = $dom.find('option')
+        if ($options.length > 0){
+            this.data = []
+
+            $options.each(function (){
+                me.data.push({
+                    value : this.value,
+                    text : this.text
+                })
+            })
+        }
+
+        //设置各种宽度
+        $dom.find('.vue-select').outerWidth(this.width)
+        $btn.find('.vue-select-btn-text').width(this.width - 35)
+        $dom.find('.vue-select-options-div').outerWidth(this.width)
+
+        //设置全局事件
+        $(window).on('click', function (e){
+            var dom = e.target
+
+            while (dom){
+                if (dom == me.$el){
+                    return
+                }
+                dom = dom.parentElement
+                if (dom == document.body){
+                    break
+                }
+            }
+
+            me.display = false
+        })
+    }
+})
+/*
+    Copyright (c) 2015 bravf(bravfing@126.com)
+*/
+
+VueUI.component('vue-modal', {
+    template :
+        '<div class="modal vue-modal" v-show="toggle">' +
+            '<div class="modal-backdrop fade in vue-modal-backdrop"></div>' +
+            '<div class="modal-dialog" v-style="width:width+\'px\'">' +
+                '<div class="modal-content">' +
+                    '<div class="modal-header">' +
+                        '<button type="button" class="close" v-on="click:toggle=false"><span aria-hidden="true">×</span></button>' +
+                        '<h4 class="modal-title">{{title}}</h4>' +
+                    '</div>' +
+                    '<div class="modal-body">' +
+                        '{{{content}}}' +
+                        '<content></content>' +
+                    '</div>' +
+                    '<div class="modal-footer" v-show="isShowCancelBtn || isShowOkBtn">' +
+                        '<button type="button" class="btn btn-default" v-on="click:cancelBtnClick" v-show="isShowCancelBtn">{{cancelBtnText}}</button>' +
+                        '<button type="button" class="btn btn-primary" v-on="click:okBtnClick" v-show="isShowOkBtn">{{okBtnText}}</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>'
+    ,
+    data : function (){
+        return {
+            config : {},
+
+            title : '', //标题
+            content : '', //内容
+            toggle : false, //是否显示
+            width : 500, //宽度
+
+            // 按钮相关
+            isShowCancelBtn : false,
+            cancelBtnText : '取消',
+            cancelBtnCallback : VueUI.emptyFunc,
+
+            isShowOkBtn : false,
+            okBtnText : '确认',
+            okBtnCallback : VueUI.emptyFunc,
+        }
+    },
+    watch : {
+        content : function (){
+            this.$compile(this.$el.querySelector('.modal-body'))
+        },
+        title : function (){
+            this.title = this.title || document.title
+        },
+        toggle : function (){
+            if (this.toggle){
+                this.syncHeight()
+            }
+
+            document.body.style.overflow = this.toggle ? 'hidden' : 'auto'
+        }
+    },
+    methods : {
+        cancelBtnClick : function (){
+            this.toggle = false
+            this.cancelBtnCallback()
+        },
+        okBtnClick : function (){
+            this.toggle = false
+            this.okBtnCallback()
+        },
+        syncHeight : function (){
+            var height = Math.max(this.$$el.find('.modal-dialog').height() + 60, document.documentElement.clientHeight)
+            this.$backdrop.height(height)
+        }
+    },
+    compiled : function (){
+        this.title = this.title || document.title
+
+        this.$$el = $(this.$el)
+        this.$backdrop = this.$$el.find('.vue-modal-backdrop')
+    }
+})
+
+new function (){
+    var str =
+    '<div id="VueUIAlertConfirm">' +
+        '<vue-modal vue-id="VueUIAlert" v-with="config:VueUIAlertConf"></vue-modal>' +
+        '<vue-modal vue-id="VueUIConfirm" v-with="config:VueUIConfirmConf"></vue-modal>' +
+    '</div>'
+    $('body').append(str)
+
+    new Vue({
+        el : '#VueUIAlertConfirm',
+        data : {
+            VueUIAlertConf : {
+                isShowOkBtn : true
+            },
+            VueUIConfirmConf : {
+                isShowOkBtn : true,
+                isShowCancelBtn : true
+            }
+        }
+    })
+
+    var alertVU = VueUI.getComponent('VueUIAlert')
+    var confirmVU = VueUI.getComponent('VueUIConfirm')
+
+    VueUI.alert = function (conf){
+        if ($.type(conf) == 'object'){
+            alertVU.title = conf.title
+            alertVU.content = conf.content || ''
+            alertVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
+        }
+        else {
+            alertVU.content = conf
+            alertVU.title = document.title
+            alertVU.okBtnCallback = VueUI.emptyFunc
+        }
+        alertVU.toggle = true
+    }
+
+    VueUI.confirm = function (conf){
+        confirmVU.title = conf.title
+        confirmVU.content = conf.content || '',
+        confirmVU.okBtnCallback = conf.okCallback || VueUI.emptyFunc
+        confirmVU.cancelBtnCallback = conf.cancelCallback || VueUI.emptyFunc
+        confirmVU.toggle = true
+    }
+}()
