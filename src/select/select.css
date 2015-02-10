@@ -16,6 +16,7 @@
 .vue-select-btn-text{
     display: inline-block;
     overflow: hidden;
+    height: 20px;
 }
 .vue-select-btn .caret{
     position: absolute;

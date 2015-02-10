@@ -62,6 +62,7 @@ VueUI.component('vue-select', {
         },
         syncCurr : function (key){
             if (!this.data.length){
+                this.value = this.text = ''
                 return
             }
 
