@@ -52,11 +52,14 @@ window.VueUI = function (){
                 parentAttr = attrList.slice(-1)[0]
             }
 
-            me[b] = parentObj[parentAttr]
-
-            me.$parent.$watch(attr, function (){
+            //只有vue-model是双向（多重双向会导致数据混乱）
+            if (a == 'vue-model'){
                 me[b] = parentObj[parentAttr]
-            })
+                me.$parent.$watch(attr, function (){
+                    me[b] = parentObj[parentAttr]
+                })
+            }
+
             me.$watch(b, function (){
                 parentObj[parentAttr] = me[b]
             })
