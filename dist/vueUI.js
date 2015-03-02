@@ -52,11 +52,14 @@ window.VueUI = function (){
                 parentAttr = attrList.slice(-1)[0]
             }
 
-            me[b] = parentObj[parentAttr]
-
-            me.$parent.$watch(attr, function (){
+            //只有vue-model是双向（多重双向会导致数据混乱）
+            if (a == 'vue-model'){
                 me[b] = parentObj[parentAttr]
-            })
+                me.$parent.$watch(attr, function (){
+                    me[b] = parentObj[parentAttr]
+                })
+            }
+
             me.$watch(b, function (){
                 parentObj[parentAttr] = me[b]
             })
@@ -590,17 +593,14 @@ VueUI.component('vue-select', {
     },
     watch : {
         data : function (){
-            this.syncCurr()
+            this.syncCurr('data')
+        },
+        value : function (){
+            this.syncCurr('value')
         },
         index : function (){
             this.syncCurrByIndex()
             this.onChange(this.value, this.text, this.index)
-        },
-        value : function (){
-            this.syncCurr()
-        },
-        text : function (){
-            this.syncCurr('text')
         }
     },
     methods : {
@@ -612,24 +612,13 @@ VueUI.component('vue-select', {
             this.toggleOptions()
         },
         syncCurr : function (key){
-            if (!this.data.length){
-                this.value = this.text = ''
+            if (this.data.length == 0){
                 return
-            }
-
-            var _key = key
-
-            key = (key=='text') ? 'text' : 'value'
-
-            if (key == 'value'){
-                if (this.value=='' && this.text!=''){
-                    key = 'text'
-                }
             }
 
             for (var i=0, option; i<this.data.length; i++){
                 option = this.data[i]
-                if (option[key] == this[key]){
+                if (option['value'] == this['value']){
                     this.index = i
                     this.text = option.text
                     this.value = option.value
@@ -637,12 +626,19 @@ VueUI.component('vue-select', {
                 }
             }
 
-            if ( (_key == 'data') && (this.text == '') && (this.value == '') ){
-                this.syncCurrByIndex()
+            //如果有值没匹配上
+            if (this.value != ''){
+                return
             }
+
+            this.syncCurrByIndex(0)
         },
-        syncCurrByIndex : function (){
-            var currOption = this.data[this.index]
+        syncCurrByIndex : function (idx){
+            if (typeof idx == 'undefined'){
+                idx = this.index
+            }
+
+            var currOption = this.data[idx]
             if (!currOption){
                 return
             }
