@@ -1,0 +1,18 @@
+{
+"status":0,
+"message":null,
+"data":[
+    {
+        "bankcode": "ABC",
+        "bankname": "中国农业银行"
+     },
+    {
+         "bankcode": "ADBC",
+         "bankname": "中国农业发展银行"
+     },
+     {
+         "bankcode": "BCM",
+          "bankname": "交通银行"
+      }
+    ]
+}

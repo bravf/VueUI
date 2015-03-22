@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8"/>
+        <title>VueUI-suggest</title>
+        <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css" rel="stylesheet">
+        <link href="../../dist/vueUI.css" rel="stylesheet">
+        <style type="text/css">
+        </style>
+    </head>
+    <body id="suggestTest">
+        <div style="padding:20px;">
+            <vue-suggest v-with="config:conf" vue-id="mySuggest"></vue-suggest>
+        </div>
+    </body>
+</html>
+<script src="../../lib/jquery.js"></script>
+<script src="../../lib/vue.js"></script>
+<script src="../../dist/vueUI.js"></script>
+<script>
+new Vue({
+    el : '#suggestTest',
+    data : {
+        conf : {
+            url : 'suggest.json',
+            valid : true,
+            filterData : function (data){
+                data.data.forEach(function (item){
+                    item.value = item.bankcode
+                    item.text = item.bankname
+                })
+                return data.data
+            }
+        }
+    },
+    methods : {
+    }
+})
+</script>
