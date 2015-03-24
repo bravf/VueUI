@@ -31,16 +31,12 @@ window.VueUI = function (){
     function handleVueAttr(){
         var me = this
 
-        console.log(me.$el.attributes)
         ;[].slice.call(me.$el.attributes).forEach(function (item){
             var key = item.name
             var value = item.value
 
-            console.log(key)
-
             if (key.indexOf('vue-attr-') == 0){
-                console.log(key)
-                me[key] = value 
+                me[key.slice(9)] = value 
             }
         })
     }
