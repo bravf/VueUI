@@ -72,11 +72,6 @@ VueUI.component('vue-select', {
                 }
             }
 
-            //如果有值没匹配上
-            if (this.value != ''){
-                return
-            }
-
             this.syncCurrByIndex(0)
         },
         syncCurrByIndex : function (idx){

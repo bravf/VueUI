@@ -27,6 +27,24 @@ window.VueUI = function (){
         }, true)
     }
 
+    //处理vue-attr
+    function handleVueAttr(){
+        var me = this
+
+        console.log(me.$el.attributes)
+        ;[].slice.call(me.$el.attributes).forEach(function (item){
+            var key = item.name
+            var value = item.value
+
+            console.log(key)
+
+            if (key.indexOf('vue-attr-') == 0){
+                console.log(key)
+                me[key] = value 
+            }
+        })
+    }
+
     //处理vue-model
     function handleVueModel(){
         var me = this
@@ -77,6 +95,7 @@ window.VueUI = function (){
             var comId = this.$el.getAttribute('vue-id') || getComId()
             componentPool[comId] = this
 
+            handleVueAttr.call(this)
             handleVueModel.call(this)
             mixConfig.call(this)
             syncConfig.call(this)
@@ -624,11 +643,6 @@ VueUI.component('vue-select', {
                     this.value = option.value
                     return
                 }
-            }
-
-            //如果有值没匹配上
-            if (this.value != ''){
-                return
             }
 
             this.syncCurrByIndex(0)
