@@ -70,6 +70,12 @@ VueUI.component('vue-modal', {
         syncHeight : function (){
             var height = Math.max(this.$$el.find('.modal-dialog').height() + 60, document.documentElement.clientHeight)
             this.$backdrop.height(height)
+        },
+        show : function (){
+            this.toggle = true
+        },
+        hide : function (){
+            this.toggle = false
         }
     },
     compiled : function (){
