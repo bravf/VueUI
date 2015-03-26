@@ -13,6 +13,7 @@
     display: none;
     background: #fff;
     margin-top: 2px;
+    z-index: 1000;
 }
 .vue-datepicker-inner{
     width: 218px;
