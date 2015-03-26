@@ -13,6 +13,7 @@
     display: none;
     background: #fff;
     margin-top: 2px;
+    z-index: 1000;
 }
 .vue-datepicker-inner{
     width: 218px;
@@ -70,12 +71,6 @@
     right: 2px;
 }
 
-.vue-pager{
-    font-size: 0;
-}
-.vue-pager-pagination{
-    margin: 0;
-}
 .vue-modal{
     display: block;
     overflow-x: hidden;
@@ -83,6 +78,12 @@
 }
 .vue-modal-backdrop{
     position: absolute;
+}
+.vue-pager{
+    font-size: 0;
+}
+.vue-pager-pagination{
+    margin: 0;
 }
 .vue-select{
     position: relative;
