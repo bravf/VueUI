@@ -71,6 +71,12 @@
     right: 2px;
 }
 
+.vue-pager{
+    font-size: 0;
+}
+.vue-pager-pagination{
+    margin: 0;
+}
 .vue-modal{
     display: block;
     overflow-x: hidden;
@@ -78,12 +84,6 @@
 }
 .vue-modal-backdrop{
     position: absolute;
-}
-.vue-pager{
-    font-size: 0;
-}
-.vue-pager-pagination{
-    margin: 0;
 }
 .vue-select{
     position: relative;
