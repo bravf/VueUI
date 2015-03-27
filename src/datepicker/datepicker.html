@@ -14,6 +14,8 @@
     </head>
     <body id="datepickerTest" style="padding:100px">
         <vue-datepicker v-with="config:datepickerConf" vue-model="sDate"></vue-datepicker>
+        <vue-datepicker v-with="config:datepickerConf" vue-model="sDate2"></vue-datepicker>
+        
         <vue-table v-with="config:tableConf" vue-id="myTable"></vue-table>
 
     </body>
@@ -81,6 +83,7 @@ var x = new Vue({
     el : '#datepickerTest',
     data : {
         sDate : '2015-02-14',
+        sDate2 : '',
         tableConf : tableConf
     }
 })
