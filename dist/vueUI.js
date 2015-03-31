@@ -80,6 +80,7 @@ window.VueUI = function (){
         })
     }
 
+    VueUI.getComId = getComId
     VueUI.emptyFunc = Function.prototype
 
     VueUI.component = function (key, options){
@@ -974,7 +975,7 @@ VueUI.component('vue-table', {
             '</tbody>' +
             '<tfoot v-if="isShowFoot"><tr><td colspan="{{columnsLen}}" class="vue-table-pager-td">' +
                 '<p class="vue-table-totalCount">共 {{totalCount}} 条结果</p>' +
-                '<div class="vue-table-pager"><vue-pager v-ref="pager" v-with="config:pagerConfig"></vue-pager></div>' +
+                '<div class="vue-table-pager"><vue-pager v-ref="pager" v-with="config:pagerConfig" vue-id="{{vuePageId}}"></vue-pager></div>' +
             '</td></tr></tfoot>' +
         '</table>'
     ,
@@ -995,20 +996,16 @@ VueUI.component('vue-table', {
             //分页相关参数
             pagerConfig : {
                 totalPage : 0,
-                currPage : 0,
                 onChange : VueUI.emptyFunc
             },
             totalPage : 0,
-            currPage : 0,
-            onPagerChange : VueUI.emptyFunc
+            onPagerChange : VueUI.emptyFunc,
+            vuePageId : VueUI.getComId() + '_table_pager'
         }
     },
     watch : {
         totalPage : function (){
             this.pagerConfig.totalPage = this.totalPage
-        },
-        currPage : function (){
-            this.pagerConfig.currPage = this.currPage
         },
         onPagerChange : function (){
             this.pagerConfig.onChange = this.onPagerChange
@@ -1140,6 +1137,7 @@ VueUI.component('vue-table', {
     },
     compiled : function (){
         this.$$el = $(this.$el)
+        this.pager = VueUI.$(this.vuePageId)
         this.handleColumns()
 
         this.columnsLen = this.columns.length
