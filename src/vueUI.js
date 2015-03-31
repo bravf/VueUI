@@ -80,6 +80,7 @@ window.VueUI = function (){
         })
     }
 
+    VueUI.getComId = getComId
     VueUI.emptyFunc = Function.prototype
 
     VueUI.component = function (key, options){
