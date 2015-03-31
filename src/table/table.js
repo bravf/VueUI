@@ -44,15 +44,20 @@ VueUI.component('vue-table', {
             //分页相关参数
             pagerConfig : {
                 totalPage : 0,
+                currPage : 0,
                 onChange : VueUI.emptyFunc
             },
             totalPage : 0,
+            currPage : 0,
             onPagerChange : VueUI.emptyFunc
         }
     },
     watch : {
         totalPage : function (){
             this.pagerConfig.totalPage = this.totalPage
+        },
+        currPage : function (){
+            this.pagerConfig.currPage = this.currPage
         },
         onPagerChange : function (){
             this.pagerConfig.onChange = this.onPagerChange
