@@ -8,6 +8,7 @@
     border: 1px solid rgba(0,0,0,.15);
     top: 36px;
     z-index: 10000;
+    background: #fff;
 }
 .vue-suggest-options-ul{
     position: static;

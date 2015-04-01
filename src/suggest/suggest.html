@@ -10,7 +10,8 @@
     </head>
     <body id="suggestTest">
         <div style="padding:20px;">
-            <vue-suggest v-with="config:conf" vue-id="mySuggest"></vue-suggest>
+            <vue-suggest v-with="config:conf" vue-id="mySuggest" vue-model="sugValue" vue-model-text="sugText"></vue-suggest>
+            <br>asdfasdfad
         </div>
     </body>
 </html>
@@ -18,14 +19,16 @@
 <script src="../../lib/vue.js"></script>
 <script src="../../dist/vueUI.js"></script>
 <script>
-new Vue({
+x = new Vue({
     el : '#suggestTest',
     data : {
+        sugValue : '123',
+        sugText : '123',
+        
         conf : {
             url : 'suggest.json',
             valid : true,
-            text : 123,
-            value : 123,
+            width : 150,
             filterData : function (data){
                 data.data.forEach(function (item){
                     item.value = item.bankcode
