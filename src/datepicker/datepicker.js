@@ -200,19 +200,7 @@ VueUI.component('vue-datepicker', {
         var me = this
         me.getDateRange()
 
-        $(window).on('click', function (e){
-            var dom = e.target
-
-            while (dom){
-                if (dom == me.$el){
-                    return
-                }
-                dom = dom.parentElement
-                if (dom == document.body){
-                    break
-                }
-            }
-
+        VueUI.winClick(me.$el, function (){
             me.popupDisplay = 'none'
         })
     }

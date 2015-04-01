@@ -2,11 +2,9 @@
     position: relative;
     display: inline-block;
 }
-
 .vue-suggest-options-div{
     position: absolute;
     max-height: 270px;
-    overflow: scroll;
     border: 1px solid rgba(0,0,0,.15);
     top: 36px;
     z-index: 10000;

@@ -5,7 +5,7 @@
 VueUI.component('vue-suggest', {
     template :
         '<div class="vue-suggest">' +
-            '<input class="form-control" v-model="words" v-on="keydown:keydown, focus:focus, blur:blur"/>' +
+            '<input class="form-control" v-model="text" v-on="keydown:keydown, focus:focus, blur:blur"/>' +
             '<div class="vue-suggest-options-div" v-show="display">' +
                 '<ul class="dropdown-menu vue-suggest-options-ul">' +
                     '<li v-repeat="data" v-on="click:itemClick($index)" v-class="vue-suggest-option-curr:$index==index">' +
@@ -22,16 +22,16 @@ VueUI.component('vue-suggest', {
 
             width : 300,
             data : [],
-            valid : false,      //是否校验是有效值
+            valid : false,                 //是否校验是有效值
 
-            value : '',         //当前值
-            text : '',          //当前文本
-            index : -1,         //suggest索引
+            value : '',
+            text : '',
+            index : -1,
+            isBlock : false,               //标记是否对text的change发请求
+            isBlur : true,
 
-            url : '',            //请求地址
-            words : '',          //请求参数
-            words2 : '',
-            field : 'words',     //请求字段名
+            url : '',                      //请求地址
+            field : 'words',               //请求字段名
 
             filterData : function (data){   //处理返回数据
                 return data
@@ -39,60 +39,71 @@ VueUI.component('vue-suggest', {
         }
     },
     watch : {
+        text : function (){
+            if (this.isBlock || this.isBlur){
+                return false
+            }
+            this.value = ''
+            this.delayRequest()
+        },
+        display : function (val){
+            if (!val){
+                if (this.valid && !this.value){
+                    this.text = ''
+                }
+            }
+        }
     },
     methods : {
         keydown : function (e){
             var me = this
-            var kc = e.keyCode
+            switch (e.keyCode){
+                case 13:
+                    me.display = false
+                    break
 
-            if (kc == 13){             //enter
-                this.display = false
-            }
-            else if (kc == 8){          //删除
-                this.value = this.text = ''
-            }
-            else if (kc==38 || kc==40){
-                if (!this.display){
-                    return
-                }
+                case 38:
+                    e.preventDefault()
+                    me.setIndex(me.index--)
+                    break
 
-                if (kc == 38){
-                    this.index--
-                }
-                else if (kc==40){
-                    this.index++
-                }
+                case 40:
+                    e.preventDefault()
+                    me.setIndex(me.index++)
+                    break
 
-                this.setValue()
-            }
-            else {
-                Vue.nextTick(function (){
-                    if (me.words != me.words2){
-                        me.words2 = me.words
-                        me.sendRequest()
-                    }
-                })
+                default:
+                    break
             }
         },
         focus : function (){
-            if (this.words){
-                this.sendRequest()
+            this.isBlur = false
+            if (this.text){
+                this.delayRequest()
             }
         },
         blur : function (){
-            this.display = false
-            if (this.valid && !this.value){
-                this.words = ''
+            this.isBlur = true
+        },
+        delayRequest : function (){
+            var me = this
+            if (me.reqTimer){
+                clearTimeout(me.reqTimer)
             }
+            me.reqTimer = setTimeout(function (){
+                me.sendRequest()
+            }, 150);
         },
         sendRequest : function (){
             var me = this
             var params = {}
 
-            this.value = this.text = ''
+            if (!me.text){
+                return false
+            }
 
-            params[this.field] = this.words2
-            params['-'] = +new Date
+            params[this.field] = this.text
+            params['-'] = (new Date).getTime()
 
             $.getJSON(this.url, params).done(function (data){
                 me.data = me.filterData(data)
@@ -102,7 +113,19 @@ VueUI.component('vue-suggest', {
                 }
             })
         },
-        setValue : function (){
+        setIndex : function (){
+            var me = this
+
+            if (!me.display){
+                return false
+            }
+
+            //暂时关闭对text的监控，此时发生的text变化不发起请求
+            me.isBlock = true
+            setTimeout(function (){
+                me.isBlock = false
+            }, 50)
+            
             if (!this.data.length) {
                 return
             }
@@ -118,20 +141,26 @@ VueUI.component('vue-suggest', {
             }
 
             this.value = this.data[this.index].value
-            this.text = this.words = this.data[this.index].text
+            this.text = this.data[this.index].text
         },
         itemClick : function (idx){
             this.index = idx
-            this.setValue()
-            //this.display = false
+            this.setIndex()
+            this.display = false
         }
     },
     compiled : function (){
         var me = this
         me.$$el = $(me.$el)
+        me.$input = me.$$el.find('.form-control')
 
         //设置宽度
         me.$$el.find('.vue-suggest').outerWidth(me.width)
         me.$$el.find('.vue-suggest-options-div').outerWidth(me.width)
+
+        //设置全局事件
+        VueUI.winClick(me.$el, function (){
+            me.display = false
+        })
     }
 })

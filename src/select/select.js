@@ -172,20 +172,7 @@ VueUI.component('vue-select', {
         $btn.find('.vue-select-btn-text').width(this.width - 35)
         $dom.find('.vue-select-options-div').outerWidth(this.width)
 
-        //设置全局事件
-        $(window).on('click', function (e){
-            var dom = e.target
-
-            while (dom){
-                if (dom == me.$el){
-                    return
-                }
-                dom = dom.parentElement
-                if (dom == document.body){
-                    break
-                }
-            }
-
+        VueUI.winClick(me.$el, function (){
             me.display = false
         })
     }

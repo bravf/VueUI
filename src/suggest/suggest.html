@@ -24,6 +24,8 @@ new Vue({
         conf : {
             url : 'suggest.json',
             valid : true,
+            text : 123,
+            value : 123,
             filterData : function (data){
                 data.data.forEach(function (item){
                     item.value = item.bankcode

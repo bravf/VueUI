@@ -80,9 +80,6 @@ window.VueUI = function (){
         })
     }
 
-    VueUI.getComId = getComId
-    VueUI.emptyFunc = Function.prototype
-
     VueUI.component = function (key, options){
         //在created方法中做一些全局管理操作
         var _compiled = options['compiled'] || VueUI.emptyFunc
@@ -105,6 +102,27 @@ window.VueUI = function (){
 
     VueUI.getComponent = VueUI.$ = function (id){
         return componentPool[id]
+    }
+
+    VueUI.getComId = getComId
+    VueUI.emptyFunc = Function.prototype
+
+    VueUI.winClick = function (targetDom, callback){
+        $(window).on('click', function (e){
+            var dom = e.target
+
+            while (dom){
+                if (dom == targetDom){
+                    return
+                }
+                dom = dom.parentElement
+                if (dom == document.body){
+                    break
+                }
+            }
+
+            callback()
+        })
     }
 
     return VueUI

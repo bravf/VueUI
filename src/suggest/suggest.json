@@ -13,6 +13,26 @@
      {
          "bankcode": "BCM",
           "bankname": "交通银行"
+      },
+      {
+         "bankcode": "BCM2",
+          "bankname": "交通银行2"
+      },
+      {
+         "bankcode": "BCM3",
+          "bankname": "交通银行3"
+      },
+      {
+         "bankcode": "BCM4",
+          "bankname": "交通银行4"
+      },
+      {
+         "bankcode": "BCM5",
+          "bankname": "交通银行5"
+      },
+      {
+         "bankcode": "BCM6",
+          "bankname": "交通银行6"
       }
     ]
 }
