@@ -107,6 +107,15 @@ window.VueUI = function (){
     VueUI.getComId = getComId
     VueUI.emptyFunc = Function.prototype
 
+    VueUI.resetArray = function (a, b){
+        while (a.length){
+            a.pop()
+        }
+        b.forEach(function (x){
+            a.push(x)
+        })
+    }
+
     VueUI.winClick = function (targetDom, callback){
         $(window).on('click', function (e){
             var dom = e.target
