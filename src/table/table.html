@@ -6,16 +6,18 @@
         <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="../../dist/vueUI.css" rel="stylesheet">
         <style type="text/css">
-        @import url("http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
-        *{
-            font-family: 'Lato'
-        }
+
         </style>
     </head>
     <body id="tableTest">
         <div style="padding:20px">
             <vue-table v-with="config:tableConf" vue-id="myTable"></vue-table>
         </div>
+
+        <div  v-repeat="a:arr">
+            <div>{{a}}</div>
+        </div>
+        
         <button class="btn btn-default" v-on="click:getData">获取数据</button>
         <button class="btn btn-default" v-on="click:clearData">清空数据</button>
     </body>
@@ -48,7 +50,8 @@ var tableConf = {
     pagerConfig : {
         totalPage : 0,
         onChange : VueUI.emptyFunc
-    }
+    },
+    data : []
 }
 
 function _getData(pagerNum){
@@ -66,8 +69,7 @@ function _getData(pagerNum){
             }
         )
     }
-
-    myTable.data = data
+    VueUI.resetArray(tableConf.data, data)
     myTable.totalPage = 10
     myTable.totalCount = 234
     myTable.onPagerChange = function (num){
@@ -85,7 +87,8 @@ function getData(pagerNum){
 x = new Vue({
     el : '#tableTest',
     data : {
-        tableConf : tableConf
+        tableConf : tableConf,
+        arr : []
     },
     methods : {
         getData : function (){
@@ -93,10 +96,17 @@ x = new Vue({
         },
         clearData : function (){
             var myTable = VueUI.getComponent('myTable')
-            myTable.data = []
+            VueUI.resetArray(tableConf.data, [])
+            //tableConf.data = []
+            //tableConf.data = []
+            //myTable.data = []
             myTable.totalPage = 0
             myTable.totalCount = 0
         }
     }
+})
+
+x.$watch('arr', function (){
+    console.log(x.arr)
 })
 </script>
