@@ -6,7 +6,7 @@ VueUI.component('vue-select', {
     template :
         '<div class="vue-select">' +
             '<div class="vue-select-content"><content></content></div>' +
-            '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
+            '<button type="button" class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
                 '<span class="vue-select-btn-text">{{text}}</span>' +
                 '<span class="caret"></span>' +
             '</button>' +
