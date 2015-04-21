@@ -606,7 +606,7 @@ VueUI.component('vue-select', {
     template :
         '<div class="vue-select">' +
             '<div class="vue-select-content"><content></content></div>' +
-            '<button class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
+            '<button type="button" class="btn btn-default vue-select-btn" v-on="click:buttonClick">' +
                 '<span class="vue-select-btn-text">{{text}}</span>' +
                 '<span class="caret"></span>' +
             '</button>' +
@@ -781,6 +781,44 @@ VueUI.component('vue-select', {
     Copyright (c) 2015 bravf(bravfing@126.com)
 */
 
+VueUI.component('vue-tab', {
+    template : '<div class="vue-tab"><content></content></div>',
+    data : function (){
+        return {
+            config : {},
+            active : 0
+        }
+    },
+    watch : {
+        active : function (){
+            this.setActive()
+        }
+    },
+    methods : {
+        setActive : function (){
+            this.$tabs.removeClass('active').eq(this.active).addClass('active')
+            this.$contents.removeClass('active').eq(this.active).addClass('active')
+        }
+    },
+    compiled : function (){
+        var me = this
+        this.$$el = $(this.$el)
+        this.$tabs = this.$$el.find('.nav li')
+        this.$contents = this.$$el.find('.tab-pane')
+
+        this.$tabs.each(function (idx){
+            $(this).on('click', function (){
+                me.active = idx
+            })
+        })
+
+        this.setActive()
+    }
+})
+/*
+    Copyright (c) 2015 bravf(bravfing@126.com)
+*/
+
 VueUI.component('vue-suggest', {
     template :
         '<div class="vue-suggest">' +
@@ -941,44 +979,6 @@ VueUI.component('vue-suggest', {
         VueUI.winClick(me.$el, function (){
             me.display = false
         })
-    }
-})
-/*
-    Copyright (c) 2015 bravf(bravfing@126.com)
-*/
-
-VueUI.component('vue-tab', {
-    template : '<div class="vue-tab"><content></content></div>',
-    data : function (){
-        return {
-            config : {},
-            active : 0
-        }
-    },
-    watch : {
-        active : function (){
-            this.setActive()
-        }
-    },
-    methods : {
-        setActive : function (){
-            this.$tabs.removeClass('active').eq(this.active).addClass('active')
-            this.$contents.removeClass('active').eq(this.active).addClass('active')
-        }
-    },
-    compiled : function (){
-        var me = this
-        this.$$el = $(this.$el)
-        this.$tabs = this.$$el.find('.nav li')
-        this.$contents = this.$$el.find('.tab-pane')
-
-        this.$tabs.each(function (idx){
-            $(this).on('click', function (){
-                me.active = idx
-            })
-        })
-
-        this.setActive()
     }
 })
 /*

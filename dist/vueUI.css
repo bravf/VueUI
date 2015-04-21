@@ -143,6 +143,9 @@
     transform:scaleY(-1);
     -webkit-transform:scaleY(-1);
 }
+.vue-tab-content{
+    display: none;
+}
 .vue-suggest{
     position: relative;
     display: inline-block;
@@ -175,9 +178,6 @@
 }
 .vue-suggest-option-curr{
     background: #f5f5f5;
-}
-.vue-tab-content{
-    display: none;
 }
 .vue-table{}
 .vue-table-pager-td{
