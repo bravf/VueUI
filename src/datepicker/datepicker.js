@@ -13,8 +13,8 @@ VueUI.component('vue-datepicker', {
                     '</div>' +
                     '<div class="vue-datepicker-body">' +
                         '<div class="vue-datepicker-ctrl">' +
-                            '<i class="glyphicon glyphicon-chevron-left vue-datepicker-preMonthBtn" v-on="click:preNextMonthClick(0)"></i>' +
-                            '<i class="glyphicon glyphicon-chevron-right vue-datepicker-nextMonthBtn" v-on="click:preNextMonthClick(1)"></i>' +
+                            '<i class="vue-month-btn vue-datepicker-preMonthBtn" v-on="click:preNextMonthClick(0)">&lt;</i>' +
+                            '<i class="vue-month-btn vue-datepicker-nextMonthBtn" v-on="click:preNextMonthClick(1)">&gt;</i>' +
                             '<p>{{stringify(currDate, "yyyy年MM月")}}</p>' +
                         '</div>' +
                         '<div class="vue-datepicker-weekRange">' +
