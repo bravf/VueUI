@@ -62,13 +62,20 @@
 .vue-datepicker-ctrl i{
     position: absolute;
     cursor: pointer;
-    top: 5px;
+    top: 1px;
+}
+.vue-month-btn{
+	font-weight: bold;
+	-webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 }
 .vue-datepicker-preMonthBtn{
-    left: 2px;
+    left: 4px;
 }
 .vue-datepicker-nextMonthBtn{
-    right: 2px;
+    right: 4px;
 }
 
 .vue-modal{
@@ -143,9 +150,6 @@
     transform:scaleY(-1);
     -webkit-transform:scaleY(-1);
 }
-.vue-tab-content{
-    display: none;
-}
 .vue-suggest{
     position: relative;
     display: inline-block;
@@ -178,6 +182,9 @@
 }
 .vue-suggest-option-curr{
     background: #f5f5f5;
+}
+.vue-tab-content{
+    display: none;
 }
 .vue-table{}
 .vue-table-pager-td{

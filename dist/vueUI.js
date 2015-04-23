@@ -152,8 +152,8 @@ VueUI.component('vue-datepicker', {
                     '</div>' +
                     '<div class="vue-datepicker-body">' +
                         '<div class="vue-datepicker-ctrl">' +
-                            '<i class="glyphicon glyphicon-chevron-left vue-datepicker-preMonthBtn" v-on="click:preNextMonthClick(0)"></i>' +
-                            '<i class="glyphicon glyphicon-chevron-right vue-datepicker-nextMonthBtn" v-on="click:preNextMonthClick(1)"></i>' +
+                            '<i class="vue-month-btn vue-datepicker-preMonthBtn" v-on="click:preNextMonthClick(0)">&lt;</i>' +
+                            '<i class="vue-month-btn vue-datepicker-nextMonthBtn" v-on="click:preNextMonthClick(1)">&gt;</i>' +
                             '<p>{{stringify(currDate, "yyyy年MM月")}}</p>' +
                         '</div>' +
                         '<div class="vue-datepicker-weekRange">' +
@@ -781,44 +781,6 @@ VueUI.component('vue-select', {
     Copyright (c) 2015 bravf(bravfing@126.com)
 */
 
-VueUI.component('vue-tab', {
-    template : '<div class="vue-tab"><content></content></div>',
-    data : function (){
-        return {
-            config : {},
-            active : 0
-        }
-    },
-    watch : {
-        active : function (){
-            this.setActive()
-        }
-    },
-    methods : {
-        setActive : function (){
-            this.$tabs.removeClass('active').eq(this.active).addClass('active')
-            this.$contents.removeClass('active').eq(this.active).addClass('active')
-        }
-    },
-    compiled : function (){
-        var me = this
-        this.$$el = $(this.$el)
-        this.$tabs = this.$$el.find('.nav li')
-        this.$contents = this.$$el.find('.tab-pane')
-
-        this.$tabs.each(function (idx){
-            $(this).on('click', function (){
-                me.active = idx
-            })
-        })
-
-        this.setActive()
-    }
-})
-/*
-    Copyright (c) 2015 bravf(bravfing@126.com)
-*/
-
 VueUI.component('vue-suggest', {
     template :
         '<div class="vue-suggest">' +
@@ -979,6 +941,44 @@ VueUI.component('vue-suggest', {
         VueUI.winClick(me.$el, function (){
             me.display = false
         })
+    }
+})
+/*
+    Copyright (c) 2015 bravf(bravfing@126.com)
+*/
+
+VueUI.component('vue-tab', {
+    template : '<div class="vue-tab"><content></content></div>',
+    data : function (){
+        return {
+            config : {},
+            active : 0
+        }
+    },
+    watch : {
+        active : function (){
+            this.setActive()
+        }
+    },
+    methods : {
+        setActive : function (){
+            this.$tabs.removeClass('active').eq(this.active).addClass('active')
+            this.$contents.removeClass('active').eq(this.active).addClass('active')
+        }
+    },
+    compiled : function (){
+        var me = this
+        this.$$el = $(this.$el)
+        this.$tabs = this.$$el.find('.nav li')
+        this.$contents = this.$$el.find('.tab-pane')
+
+        this.$tabs.each(function (idx){
+            $(this).on('click', function (){
+                me.active = idx
+            })
+        })
+
+        this.setActive()
     }
 })
 /*
