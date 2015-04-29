@@ -161,6 +161,7 @@
     top: 36px;
     z-index: 10000;
     background: #fff;
+    overflow: auto;
 }
 .vue-suggest-options-ul{
     position: static;
