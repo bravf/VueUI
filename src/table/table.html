@@ -16,7 +16,7 @@
 
         <div  v-repeat="a:arr">
             <div>{{a}}</div>
-        </div>
+        </div >
         
         <button class="btn btn-default" v-on="click:getData">获取数据</button>
         <button class="btn btn-default" v-on="click:clearData">清空数据</button>
@@ -31,10 +31,10 @@ var tableConf = {
     //isShowFoot : false,
     isCheckable : true,
     columns : [
-        {'field':'name', 'isSortable':true},
+        {'field':'name', 'isSortable':true, 'textAlign':'center', 'textAlign2':'left'},
         'math',
         'chinese',
-        {'field':'english', 'text':'英语', 'textAlign':'left','isSortable':true},
+        {'field':'english', 'text':'英语', 'textAlign2':'center','isSortable':true},
         'operate'
     ],
     onPagerChange : function (num){
