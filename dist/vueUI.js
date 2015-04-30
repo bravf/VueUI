@@ -1001,7 +1001,7 @@ VueUI.component('vue-table', {
                 '<tr v-show="!data.length"><td colspan="{{columnsLen}}" class="vue-table-empty">没有任何数据</td></tr>' +
                 '<tr v-show="data.length" v-repeat="d:data">' +
                     '<td v-if="isCheckable" class="vue-table-cb-td"><input type="checkbox" v-on="change:cbChange" class="vue-table-cb"/></td>' +
-                    '<td v-repeat="c:columns" v-style="text-align:c.textAlign">{{{d[c["field"]]}}}</td>' +
+                    '<td v-repeat="c:columns" v-style="text-align:c.textAlign2">{{{d[c["field"]]}}}</td>' +
                 '</tr>' +
             '</tbody>' +
             '<tfoot v-if="isShowFoot"><tr><td colspan="{{columnsLen}}" class="vue-table-pager-td">' +
@@ -1139,6 +1139,10 @@ VueUI.component('vue-table', {
 
                 if (!c.text){
                     c.text = c.field
+                }
+
+                if (!c.textAlign2){
+                    c.textAlign2 = c.textAlign
                 }
 
                 if (c.width == 'auto'){
