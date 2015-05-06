@@ -788,7 +788,7 @@ VueUI.component('vue-suggest', {
             '<div class="vue-suggest-options-div" v-show="display">' +
                 '<ul class="dropdown-menu vue-suggest-options-ul">' +
                     '<li v-repeat="data" v-on="click:itemClick($index)" v-class="vue-suggest-option-curr:$index==index">' +
-                        '<a href="javascript:;">{{text}}</a>' +
+                        '<a href="javascript:;" title="{{text}}">{{text}}</a>' +
                     '</li>' +
                 '</ul>' +
             '</div>' +
@@ -1027,6 +1027,7 @@ VueUI.component('vue-table', {
             //分页相关参数
             pagerConfig : {
                 totalPage : 0,
+                currPage : 0,
                 onChange : VueUI.emptyFunc
             },
             totalPage : 0,
@@ -1040,6 +1041,9 @@ VueUI.component('vue-table', {
         },
         onPagerChange : function (){
             this.pagerConfig.onChange = this.onPagerChange
+        },
+        currPage : function (){
+            this.pagerConfig.currPage = this.currPage
         },
         data : function (){
             var me = this

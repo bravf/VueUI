@@ -180,6 +180,8 @@
     padding: 3px 12px!important;
     overflow: hidden;
     text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .vue-suggest-option-curr{
     background: #f5f5f5;
