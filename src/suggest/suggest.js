@@ -9,7 +9,7 @@ VueUI.component('vue-suggest', {
             '<div class="vue-suggest-options-div" v-show="display">' +
                 '<ul class="dropdown-menu vue-suggest-options-ul">' +
                     '<li v-repeat="data" v-on="click:itemClick($index)" v-class="vue-suggest-option-curr:$index==index">' +
-                        '<a href="javascript:;">{{text}}</a>' +
+                        '<a href="javascript:;" title="{{text}}">{{text}}</a>' +
                     '</li>' +
                 '</ul>' +
             '</div>' +

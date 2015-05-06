@@ -49,6 +49,7 @@ var tableConf = {
     },
     pagerConfig : {
         totalPage : 0,
+        currPage : 3,
         onChange : VueUI.emptyFunc
     },
     data : []
@@ -106,7 +107,5 @@ x = new Vue({
     }
 })
 
-x.$watch('arr', function (){
-    console.log(x.arr)
-})
+getData(1)
 </script>
