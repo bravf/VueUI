@@ -1,8 +1,0 @@
-.vue-modal{
-    display: block;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-.vue-modal-backdrop{
-    position: absolute;
-}
