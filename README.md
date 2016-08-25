@@ -1,4 +1,4 @@
-VueUI
+VueUI (停止更新！！！)
 ======================
 依赖bootstrap,jquery,vue.js，使用之前引用：
 ```
