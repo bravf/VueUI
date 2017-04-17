@@ -83,7 +83,7 @@ new Vue({
 //selectConf.data = [{value:'',text:''},...]
 //VueUI.getComponent('mySelect')
 ```
-##table组件 ([Demo][4])
+## table组件 ([Demo][4])
 ```
 html:
 <vue-table v-with="config:tableConf" vue-id="myTable"></vue-table>
@@ -115,7 +115,7 @@ new Vue({
     }
 })
 ```
-##modal(模态框 [Demo][5])
+## modal(模态框 [Demo][5])
 ```
 //内置alert,confirm行为和浏览器自带方法一致
 VueUI.alert('hello,world!')
@@ -162,7 +162,7 @@ new Vue({
 }
 ```
 
-##tab（选项卡）
+## tab（选项卡）
 ```
 //html
 <vue-tab v-with="config:conf" vue-id="myTab">
