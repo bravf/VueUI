@@ -1,5 +1,6 @@
-请关注MeiliFE团队出品的Aurora组件，很好很强大。
+请关注MeiliFE团队出品的([Aurora][6])组件。
 ======================
+
 VueUI (停止更新！！！)
 ======================
 依赖bootstrap,jquery,vue.js，使用之前引用：
@@ -203,3 +204,4 @@ new Vue({
   [3]: http://sandbox.runjs.cn/show/z0dcccbo
   [4]: http://sandbox.runjs.cn/show/31opvmzw
   [5]: http://sandbox.runjs.cn/show/22u2abu6
+  [6]: https://meilife.github.io/Aurora/docs/install.html
