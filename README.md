@@ -204,4 +204,4 @@ new Vue({
   [3]: http://sandbox.runjs.cn/show/z0dcccbo
   [4]: http://sandbox.runjs.cn/show/31opvmzw
   [5]: http://sandbox.runjs.cn/show/22u2abu6
-  [6]: https://meilife.github.io/Aurora/docs/install.html
+  [6]: http://aurora.mljr.com/
