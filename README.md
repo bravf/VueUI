@@ -1,4 +1,4 @@
-请关注MeiliFE团队出品的([Aurora][6])组件。
+请关注([Rainbow][6])组件。
 ======================
 
 VueUI (停止更新！！！)
@@ -204,4 +204,4 @@ new Vue({
   [3]: http://sandbox.runjs.cn/show/z0dcccbo
   [4]: http://sandbox.runjs.cn/show/31opvmzw
   [5]: http://sandbox.runjs.cn/show/22u2abu6
-  [6]: http://aurora.mljr.com/
+  [6]: https://github.com/bravf/rainbow
